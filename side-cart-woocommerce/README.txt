@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/xootix
 Tags: woocommerce cart, floating cart, cart popup, woocommerce, slider
 Requires at least: 3.0.1
 Tested up to: 6.8
-Stable tag: 2.6.5
+Stable tag: 2.6.6
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,6 +128,9 @@ You can use any third party plugin such as Loco Translate for hassle free transl
 8. Change Shipping Pro
 
 == Changelog ==
+
+= 2.6.6 =
+* Fix - Deprecated warning wc_current_theme_is_fse_theme
 
 = 2.6.5 =
 * Settings UI update
