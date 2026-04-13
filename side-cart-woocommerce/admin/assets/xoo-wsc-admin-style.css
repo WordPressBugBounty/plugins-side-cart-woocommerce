@@ -412,6 +412,7 @@ a.xoo-wsc-ft-btn, .xoo-wsc-container .xoo-wsc-btn {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 a.xoo-wsc-ft-btn, a.xoo-wsc-ft-btn:hover, .xoo-wsc-container .xoo-wsc-btn, .xoo-wsc-container .xoo-wsc-btn:hover{

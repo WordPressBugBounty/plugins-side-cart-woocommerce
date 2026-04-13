@@ -504,7 +504,7 @@ jQuery(document).ready(function($){
 
 			var sideCartwidth = parseInt(this.sy('scm-width')) + 100;
 
-			selectors['.xoo-wsc-cart-active .xoo-settings-container'] = {
+			selectors['.xoo-wsc-cart-active .xoo-as-container'] = {
 				'width': 'calc( 100% - '+sideCartwidth+'px )'
 			}
 
