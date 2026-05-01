@@ -16,6 +16,7 @@ $basketIconSize = $sy['sck-size'];
 $basketOffset 	= $sy['sck-offset'];
 $basketHOffset 	= $sy['sck-hoffset'];
 $countPosition 	= $sy['sck-count-pos'];
+$countSize  	= (int) $sy['sck-count-size'];
 $basketBG 		= $sy['sck-basket-bg'];
 $basketColor 	= $sy['sck-basket-color'];
 $basketShadow 	= $sy['sck-basket-sh'];
@@ -193,6 +194,9 @@ else{
 .xoo-wsc-items-count{
 	<?php echo $countPosition === 'top_right' || $countPosition === 'top_left' ? 'top' : 'bottom' ?>: -9px;
 	<?php echo $countPosition === 'top_right' || $countPosition === 'bottom_right' ? 'right' : 'left' ?>: -8px;
+	height: <?php echo $countSize; ?>px;
+	line-height: <?php echo $countSize; ?>px;
+	width: <?php echo $countSize; ?>px;
 }
 
 .xoo-wsc-items-count, .xoo-wsch-items-count{
