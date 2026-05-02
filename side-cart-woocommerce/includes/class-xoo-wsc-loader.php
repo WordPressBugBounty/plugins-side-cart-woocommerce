@@ -225,6 +225,12 @@ class Xoo_Wsc_Loader{
 				}
 
 			}
+
+			if( version_compare( $db_version, '2.7.5', '<')  ){
+				if( !isset( $syOptions['sck-count-size'] ) ){
+					$syOptions['sck-count-size'] = 28;
+				}
+			}
 			
 			
 			update_option('xoo-wsc-gl-options', $glOptions );
