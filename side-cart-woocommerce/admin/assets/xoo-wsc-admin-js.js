@@ -90,6 +90,23 @@ jQuery(document).ready(function($){
 
 		events: function(){
 			$( Customizer.$form ).on('change', this.onFormChange );
+
+
+			Customizer.$form.find('.wp-editor-area').each(function() {
+
+			    var editor = tinymce.get(this.id);
+
+			    if (!editor) return;
+
+			    editor.on('change undo redo SetContent', function() {
+			    	editor.save();
+			        Customizer.build();
+			    });
+
+			});
+
+			
+
 		},
 
 		initTemplates: function(){
@@ -118,8 +135,6 @@ jQuery(document).ready(function($){
 
 
 		setFormValues: function(){
-			//var values 		= this.$form.serializeArray();
-			//this.formValues = this.objectifyForm(values);
 			this.formValues = this.$form.serializeJSON();
 		},
 
@@ -304,18 +319,6 @@ jQuery(document).ready(function($){
 				'color': 		this.sy('scb-txtcolor')
 			}
 
-			var footerBtn = {
-				'padding': 				this.sy('scf-btn-padding'),
-				'background-color': 	this.sy('scf-btn-bgcolor'),
-				'color': 				this.sy('scf-btn-txtcolor'),
-				'border': 				this.sy('scf-btn-border'),
-			}
-
-			var footerBtnHover = {
-				'background-color': 	this.sy('scf-btnhv-bgcolor'),
-				'color': 				this.sy('scf-btnhv-txtcolor'),
-				'border': 				this.sy('scf-btnhv-border'),
-			}
 
 			var footer = {
 				'padding': 				this.sy('scf-padding'),
@@ -423,6 +426,12 @@ jQuery(document).ready(function($){
 				}
 			}
 
+			if( this.sy('scm-info-loc') === 'body_end_stick' ){
+				body['display'] = 'flex';
+				body['flex-direction'] = 'column';
+			}
+
+
 			var selectors = {
 				'.xoo-wsc-basket': basket,
 				'.xoo-wsc-cart-active .xoo-wsc-basket': basketActive,
@@ -436,8 +445,6 @@ jQuery(document).ready(function($){
 				'.xoo-wsch-top': headerTop,
 				'.xoo-wsc-body': body,
 				'.xoo-wsc-products:not(.xoo-wsc-pattern-card), .xoo-wsc-products:not(.xoo-wsc-pattern-card) span.amount, .xoo-wsc-products:not(.xoo-wsc-pattern-card) a': bodyText,
-				'.xoo-wsc-ft-buttons-cont a.xoo-wsc-ft-btn, .xoo-wsc-container .xoo-wsc-btn': footerBtn,
-				'.xoo-wsc-ft-buttons-cont a.xoo-wsc-ft-btn:hover, .xoo-wsc-container .xoo-wsc-btn:hover': footerBtnHover,
 				'.xoo-wsc-footer': footer,
 				'.xoo-wsc-footer, .xoo-wsc-footer a, .xoo-wsc-footer .amount': footerFSize,
 				'.xoo-wsc-products:not(.xoo-wsc-pattern-card) .xoo-wsc-product': product,
@@ -462,6 +469,55 @@ jQuery(document).ready(function($){
 				}
 			}
 
+
+			if( this.sy('scm-info-loc') === 'body_end_stick' ){
+				selectors['.xoo-wsc-body .xoo-wsc-info-cont'] = {
+					'margin-top': 'auto',
+					'margin-bottom': '5px'
+				}
+				
+			}
+
+
+
+
+			var $buttonStyleTag = $('.xoo-as-button-preview-style') || $('<div class="xoo-as-button-preview-style"></div>').insertAfter(Customizer.$styleTag);
+
+			if( xoo_admin_params.settingPreviewer && xoo_admin_params.settingPreviewer.getCSS && ( !$('input[name="xoo-wsc-sy-options[scf-btn-newlayout]"]').length ||  this.sy('scf-btn-newlayout') === 'yes' ) ){
+
+				if ($buttonStyleTag.length === 0) {
+					$buttonStyleTag = $('<div class="xoo-as-button-preview-style"></div>').insertAfter(Customizer.$styleTag);
+				}
+				
+				var buttonCSS = xoo_admin_params.settingPreviewer.getCSS( '.xoo-wsc-ft-buttons-cont a.xoo-wsc-ft-btn', xoo_admin_params.settingPreviewer.getValues('xoo-wsc-sy-options[scf-btn-main]') );
+					
+				$buttonStyleTag.html('<style>'+buttonCSS+'</style>');
+			
+			}
+			else{
+
+				$buttonStyleTag.html('');
+
+
+				var footerBtn = {
+					'padding': 				this.sy('scf-btn-padding'),
+					'background-color': 	this.sy('scf-btn-bgcolor'),
+					'color': 				this.sy('scf-btn-txtcolor'),
+					'border': 				this.sy('scf-btn-border'),
+				}
+
+				var footerBtnHover = {
+					'background-color': 	this.sy('scf-btnhv-bgcolor'),
+					'color': 				this.sy('scf-btnhv-txtcolor'),
+					'border': 				this.sy('scf-btnhv-border'),
+				}
+
+				selectors['.xoo-wsc-ft-buttons-cont a.xoo-wsc-ft-btn, .xoo-wsc-container .xoo-wsc-btn'] 			= footerBtn;
+				selectors['.xoo-wsc-ft-buttons-cont a.xoo-wsc-ft-btn:hover, .xoo-wsc-container .xoo-wsc-btn:hover'] = footerBtnHover;	
+
+			}
+
+			
 			var gridCols = 'auto';
 
 			if( this.sy('scf-btns-row') === 'three' ){
@@ -598,7 +654,9 @@ jQuery(document).ready(function($){
 						checkout: this.gl('sct-ft-chkbtn'),
 						continue: this.gl('sct-ft-contbtn')
 					}
-				}
+				},
+				informationBoxLocation: this.sy('scm-info-loc'),
+				informationBox: this.gl('sct-info')
 			}
 
 			data.product.oneLiner = data.product.qtyPriceDisplay === 'one_liner' && data.product.showPqty && data.product.showPprice && data.product.showPtotal;

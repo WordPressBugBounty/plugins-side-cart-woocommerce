@@ -366,6 +366,9 @@ a.xoo-wsc-ft-btn, .xoo-wsc-container .xoo-wsc-btn {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    justify-self: center;
+    padding: 5px 20px;
+    width: 100%;
 }
 
 a.xoo-wsc-ft-btn, a.xoo-wsc-ft-btn:hover, .xoo-wsc-container .xoo-wsc-btn, .xoo-wsc-container .xoo-wsc-btn:hover{
@@ -381,7 +384,7 @@ a.xoo-wsc-ft-btn, a.xoo-wsc-ft-btn:hover, .xoo-wsc-container .xoo-wsc-btn, .xoo-
 /** FOOTER Totals **/
 .xoo-wsc-ft-totals {
     width: 100%;
-    padding: 5px 0 10px 0;
+    padding: 0 0 10px 0;
 }
 
 .xoo-wsc-ft-amt {
@@ -455,6 +458,14 @@ span.xoo-wsc-ft-amt-label {
     margin-bottom: 20px;
 }
 
+.xoo-wsc-empty-cart a.xoo-wsc-btn{
+    width: auto;
+}
+
+.xoo-wsc-emp-txt {
+    font-size: 18px;
+}
+
 /** Free **/
 span.xoo-wsc-ft-amt-label:after {
     content: ":";
@@ -478,7 +489,7 @@ span.xoo-wsc-ft-amt-label {
 
 span.xoo-wsc-footer-txt {
     text-align: center;
-    margin: -8px auto 10px;
+    margin: -8px auto 15px;
     display: block;
     font-size: 90%;
 }
@@ -560,7 +571,7 @@ span.xoo-wsc-psavlabel {
 
 
 .xoo-wsc-psavings {
-    padding: 2px 6px;
+    padding: 3px 6px;
     border: 1px solid #4CAF50;
     font-weight: 600;
     display: flex;
@@ -568,6 +579,7 @@ span.xoo-wsc-psavlabel {
     gap: 5px;
     width: max-content;
     margin-top: auto;
+    border-radius: 5px;
 }
 
 .xoo-wsc-psavings {
@@ -841,4 +853,16 @@ a.xoo-wsc-smr-link {
 .xoo-wsch-new .xoo-wsch-sec-center {
     grid-column: 2; /* middle column */
     justify-self: center;
+}
+
+
+/* --- */
+
+
+.xoo-wsc-ft-buttons-cont + .xoo-wsc-info-cont {
+    margin-top: 6px;
+}
+
+.xoo-wsc-body .xoo-wsc-info-cont{
+    margin-top: 10px;
 }

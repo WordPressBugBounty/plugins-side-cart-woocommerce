@@ -265,6 +265,8 @@ jQuery(document).ready(function($){
 
 			super( $modal, 'cart' );
 
+			this.cartLoaded = false;
+
 			this.refreshFragmentsOnPageLoad();
 			this.eventHandlers();
 
@@ -272,9 +274,11 @@ jQuery(document).ready(function($){
 
 
 		refreshFragmentsOnPageLoad(){
-			setTimeout(function(){
-				this.refreshMyFragments();
-			}.bind(this), xoo_wsc_params.fetchDelay )
+			if( xoo_wsc_params.fetchCart === 'page_load' ){
+				setTimeout(function(){
+					this.refreshMyFragments();
+				}.bind(this), xoo_wsc_params.fetchDelay )
+			}
 		}
 
 		eventHandlers(){
@@ -331,6 +335,12 @@ jQuery(document).ready(function($){
 				e.preventDefault();
 				e.stopImmediatePropagation();
 			}
+
+			if( !this.cartLoaded && xoo_wsc_params.fetchCart === 'cart_open' ){
+				this.refreshMyFragments();
+				this.cartLoaded = true;
+			}
+
 			this.toggle('show');
 			Notice.hideMarkupNotice();
 		}
@@ -511,6 +521,7 @@ jQuery(document).ready(function($){
 
 		onCartUpdate(){
 			super.onCartUpdate();
+			this.cartLoaded = true;
 			this.toggleBasket();
 			this.initMasonryLayout();
 		}

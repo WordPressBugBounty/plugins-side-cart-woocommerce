@@ -83,7 +83,7 @@ ul.xoo-wscp-features li {
 .xoo-wsc-container, .xoo-wsc-slider {
     position: fixed;
     background-color: #fff;
-    z-index: 999999;
+    z-index: 99999;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -413,6 +413,9 @@ a.xoo-wsc-ft-btn, .xoo-wsc-container .xoo-wsc-btn {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    padding: 5px 20px;
+    justify-self: center;
+    width: 100%;
 }
 
 a.xoo-wsc-ft-btn, a.xoo-wsc-ft-btn:hover, .xoo-wsc-container .xoo-wsc-btn, .xoo-wsc-container .xoo-wsc-btn:hover{
@@ -428,7 +431,7 @@ a.xoo-wsc-ft-btn, a.xoo-wsc-ft-btn:hover, .xoo-wsc-container .xoo-wsc-btn, .xoo-
 /** FOOTER Totals **/
 .xoo-wsc-ft-totals {
     width: 100%;
-    padding: 5px 0 10px 0;
+    padding: 0 0 10px 0;
 }
 
 .xoo-wsc-ft-amt {
@@ -524,7 +527,7 @@ span.xoo-wsc-ft-amt-label {
 
 span.xoo-wsc-footer-txt {
     text-align: center;
-    margin: -8px auto 10px;
+    margin: -8px auto 15px;
     display: block;
     font-size: 90%;
 }
@@ -1164,7 +1167,6 @@ ul.xoo-sc-tabs li[data-tab="pro"] {
 
 
 /* Rewards */
-* Rewards */
 .xoo-sct-active[data-tab="rewards"] .xoo-as-preview-info {
     display: none;
 }
@@ -1436,6 +1438,21 @@ span.xoo-scbhk-desc {
 
 
 
+.xoo-wsc-bar-setchkbox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.xoo-wsc-bar-setchkbox label {
+    order: 1;
+    font-weight: 500;
+    color: #979797;
+    margin-bottom: 10px;
+}
+
+
+
 ul.xoo-sc-tabs li[data-tab="rewards"], ul.xoo-sc-tabs li[data-tab="rewards"].xoo-sct-active{
     background-color: #f3db56;
     color: #000;
@@ -1486,7 +1503,7 @@ span.xoo-wsc-psavlabel {
 
 
 .xoo-wsc-psavings {
-    padding: 2px 6px;
+    padding: 3px 6px;
     border: 1px solid #4CAF50;
     font-weight: 600;
     display: flex;
@@ -1494,6 +1511,7 @@ span.xoo-wsc-psavlabel {
     gap: 5px;
     width: max-content;
     margin-top: auto;
+    border-radius: 5px;
 }
 
 .xoo-wsc-psavings {
@@ -1651,6 +1669,10 @@ span.xoo-wschl-icon {
 }
 
 
+.xoo-btn-preview {
+    max-width: 400px;
+}
+
 body.rtl .xoo-wsc-sum-col {
     padding-right: 15px;
     padding-left: 0;
@@ -1689,4 +1711,17 @@ body.rtl .xoo-wsc-basket{
 body.rtl xoo-wsc-qty-price > span{
     margin-left: 4px;
     margin-right: 0;
+}
+
+
+.xoo-wsc-ft-buttons-cont + .xoo-wsc-info-cont {
+    margin-top: 6px;
+}
+
+.xoo-wsc-body .xoo-wsc-info-cont{
+    margin-top: 10px;
+}
+
+.xoo-as-setting[data-field_id="xoo-wsc-sy-options[scf-button-pos]"] .ui-sortable {
+    max-width: 400px;
 }

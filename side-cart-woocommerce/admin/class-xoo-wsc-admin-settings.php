@@ -61,6 +61,9 @@ class Xoo_Wsc_Admin_Settings{
 
 		add_filter( 'xoo_wsc_admin_settings', array( $this, 'filter_settings' ), 10, 2 );
 
+
+
+
 	}
 
 
@@ -72,6 +75,15 @@ class Xoo_Wsc_Admin_Settings{
 				}
 			}
 		}
+
+		if( $type === 'style' && get_option( 'xoo-wsc-had-old-btn-layout',true ) !== "yes" ){
+			foreach  ($settings as $index => $setting ) {
+				if( in_array( $setting['id'], array( 'scf-btns-theme', 'scf-btn-border', 'scf-btn-bgcolor', 'scf-btn-txtcolor', 'sscf-btnhv-border', 'scf-btnhv-bgcolor', 'scf-btnhv-txtcolor', 'scf-btn-newlayout' ) ) ){
+					unset( $settings[$index] );
+				}
+			}
+		}
+
 		return $settings;
 	}
 
@@ -177,7 +189,7 @@ class Xoo_Wsc_Admin_Settings{
 					'barValue' 				=> 'subtotal',
 					'location' 				=> 'xoo_wsc_body_start',
 					'show' 					=> array( 'remaining', 'amount', 'title', 'icon' ),
-					'comptxt' 				=> "🎉 Congratulations, you've unlocked all rewards.",
+					'comptxt' 				=> "Congratulations, you've unlocked all rewards.",
 					'emptyColor' 			=> '#eee',
 					'filledColor' 			=> '#444',
 					'textColor' 			=> '#000',
@@ -187,7 +199,14 @@ class Xoo_Wsc_Admin_Settings{
 					'iconColorFilled' 		=> '#fff',
 					'iconBGColorFilled' 	=> '#444',
 					'iconBorderFilled'		=> '4px solid #eee',
-					'overrideDiscount' 		=> 'yes' 
+					'contBGColor' 			=> '#fff',
+					'contMargin' 			=> '0px 0px',
+					'contPadding' 			=> '15px 20px',
+					'highestGift' 			=> 'no',
+					'overrideDiscount' 		=> 'yes',
+					'filter_byproducts' 	=> 'no',
+					'filter_product_ids' 	=> '' ,
+					'productNotEligibleTxt'	=> 'This product is not eligible for rewards'
 				),
 				'checkpoints' => array(
 					'freeshipping' => array(
@@ -207,6 +226,7 @@ class Xoo_Wsc_Admin_Settings{
 						'remaining' => "You're [value] away from a Free Gift",
 						'gift_qty' 	=> 1,
 						'gift_ids' 	=> '',
+						'showcase' 	=> 'no'
 					),
 					'discount' => array(
 						'enable' 	=> 'yes',
@@ -225,8 +245,7 @@ class Xoo_Wsc_Admin_Settings{
 						'amount' 	=> 25,
 						'remaining' => "You're [value] away from ..."
 					),
-
-				) 
+				)
 			),
 			'hasOldheader' => get_option( 'xoo-wsc-old-header-layout',true ) === "yes"
 		) );
@@ -498,6 +517,42 @@ class Xoo_Wsc_Admin_Settings{
 
 		return ob_get_clean();
 
+	}
+
+
+
+	public function default_info_text(){
+
+		ob_start();
+
+		?>
+		<div style="padding:5px 20px;">
+			<table style="margin:auto;border-collapse:collapse;border:none; width: 350px;  text-align: center; background-color: transparent;" border="0">
+				<tr>
+					<td align="center" style="padding:5px 12px;font-size:12px;border:none;text-align: center;background-color: transparent;">
+						<div align="center" style="text-align:center;" a>
+							<img src="<?php echo XOO_WSC_URL.'/admin/assets/images/info/secure.png'?>" style="width:30px;height:auto;" class="aligncenter">
+						</div>
+						<i>Secure Checkout</i>
+					</td>
+					<td align="center" style="padding:5px 12px;font-size:12px;border:none;text-align: center; background-color: transparent;">
+						<div align="center" style="text-align:center;">
+							<img src="<?php echo XOO_WSC_URL.'/admin/assets/images/info/shipping.png'?>" style="width:30px;height:auto;" class="aligncenter">
+						</div>
+						<i>Fast Shipping</i>
+					</td>
+					<td align="center" style="padding:5px 12px;font-size:12px;border:none;text-align: center;background-color: transparent;">
+						<div align="center" style="text-align:center;">
+							<img src="<?php echo XOO_WSC_URL.'/admin/assets/images/info/returns.png'?>" style="width:30px;height:auto;" class="aligncenter">
+						</div>
+						<i>Easy Returns</i>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<?php
+		return ob_get_clean();
 	}
 
 }

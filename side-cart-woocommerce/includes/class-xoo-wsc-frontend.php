@@ -158,6 +158,7 @@ class Xoo_Wsc_Frontend{
 			'productFlyClass' 		=> apply_filters( 'xoo_wsc_product_fly_class', '' ),
 			'refreshCart' 			=> xoo_wsc_helper()->get_advanced_option('m-refresh-cart'),
 			'fetchDelay' 			=> apply_filters( 'xoo_wsc_cart_fetch_delay', 200 ),
+			'fetchCart' 			=> xoo_wsc_helper()->get_advanced_option('m-fetch-cart'),
 			'triggerClass' 			=> xoo_wsc_helper()->get_advanced_option('m-trigger-class'),
 			'productLayout' 		=> $this->sySettings['scb-playout'],
 			'cardAnimate' 			=> array(

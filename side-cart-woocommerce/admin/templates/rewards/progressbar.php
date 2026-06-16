@@ -1,7 +1,7 @@
 <script type="text/html" id="tmpl-xoo-as-bar">
 
 	<?php $id = $base_id.'[settings]' ?>
-	
+
 	<div class="xoo-wsc-bar xoo-wsc-accordion">
 
 		<div class="xoo-wsc-acc-head xoo-wsc-bar-head"><span class="dashicons dashicons-plus-alt2"></span><span class="dashicons dashicons-minus"></span><div class="xoo-wsc-bar-title">{{data.barTitle}}</div><span class="dashicons dashicons-trash xoo-wsc-bar-delete"></span></div>
@@ -222,19 +222,36 @@
 
 							<div class="xoo-wsc-barset-full xoo-wsc-bar-setgroup">
 								<div class="xoo-wsc-bar-setting">
-									<label>Free Gift - Limit to Highest Gift</label>
-									<input type="hidden" name="<?php echo $id ?>[highestGift]" value="no">
-									<input type="checkbox" value="yes" name="<?php echo $id ?>[highestGift]" {{ data.highestGift == 'yes' ? 'checked' : '' }}>
+									<div class="xoo-wsc-bar-setchkbox">
+										<label>Free Gift - Limit to Highest Gift</label>
+										<input type="hidden" name="<?php echo $id ?>[highestGift]" value="no">
+										<input type="checkbox" value="yes" name="<?php echo $id ?>[highestGift]" {{ data.highestGift == 'yes' ? 'checked' : '' }}>
+									</div>
 									<span class="xoo-scbhk-desc">If you have multiple "Free Gift" checkpoints and only want to award the gift from the highest checkpoint, enable this option. </span>
+								</div>
+
+							</div>
+
+
+							<div class="xoo-wsc-barset-full xoo-wsc-bar-setgroup">
+								<div class="xoo-wsc-bar-setting">
+									<div class="xoo-wsc-bar-setchkbox">
+										<label>Grant Reward Only for Highest Checkpoint</label>
+										<input type="hidden" name="<?php echo $id ?>[highestReward]" value="no">
+										<input type="checkbox" value="yes" name="<?php echo $id ?>[highestReward]" {{ data.highestReward == 'yes' ? 'checked' : '' }}>
+									</div>
+									<span class="xoo-scbhk-desc">Enable this option to grant rewards only for the highest checkpoint reached. Rewards from previously completed checkpoints will be skipped.<br>Example: If a customer reaches checkpoint 5, only the reward for checkpoint 5 will be granted. Rewards for checkpoints 1–4 will be skipped. </span>
 								</div>
 
 							</div>
 
 							<div class="xoo-wsc-barset-full xoo-wsc-bar-setgroup">
 								<div class="xoo-wsc-bar-setting">
-									<label>Discount - Use Highest Discount Across All Bars</label>
-									<input type="hidden" name="<?php echo $id ?>[overrideDiscount]" value="no">
-									<input type="checkbox" value="yes" name="<?php echo $id ?>[overrideDiscount]" {{ data.overrideDiscount == 'yes' ? 'checked' : '' }}>
+									<div class="xoo-wsc-bar-setchkbox">
+										<label>Discount - Use Highest Discount Across All Bars</label>
+										<input type="hidden" name="<?php echo $id ?>[overrideDiscount]" value="no">
+										<input type="checkbox" value="yes" name="<?php echo $id ?>[overrideDiscount]" {{ data.overrideDiscount == 'yes' ? 'checked' : '' }}>
+									</div>
 									<span class="xoo-scbhk-desc">When enabled, the highest discount milestone across all progress bars will take priority and override discounts from other progress bars. If disabled, the discount checkpoints in this progress bar will apply its own discount independently. </span>
 								</div>
 

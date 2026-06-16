@@ -4,6 +4,11 @@ $subtotal = wc_price(100);
 
 ?>
 
+<# if ( data.informationBoxLocation === 'footer_start' || data.informationBoxLocation === 'mobile_body' ) { #>
+	<?php echo $information_box ?>
+<# } #>
+
+
 <?php echo $footer_template ?>
 
 <# if ( data.footer.footerTxt ) { #>
@@ -20,4 +25,8 @@ $subtotal = wc_price(100);
 	<# }) #>
 
 </div>
+
+<# if ( data.informationBoxLocation === 'footer_end' ) { #>
+	<?php echo $information_box ?>
+<# } #>
 

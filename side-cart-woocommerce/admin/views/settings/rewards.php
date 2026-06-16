@@ -104,6 +104,16 @@ $rewards = array(
 
 	array(
 		'callback' 		=> 'checkbox',
+		'title' 		=> '[Free Gifts] Allow removal',
+		'id' 			=> 'scbar-fg-en-delete',
+		'section_id' 	=> 'general',
+		'default' 		=> 'no',
+		'desc' 			=> "Allow gift products to be removed from cart"
+	),
+
+
+	array(
+		'callback' 		=> 'checkbox',
 		'title' 		=> '[Free Gifts] Show added gifts in side cart',
 		'id' 			=> 'scbar-fg-show',
 		'section_id' 	=> 'general',

@@ -236,7 +236,6 @@ class Xoo_Wsc_Template_Args{
 		$show 			= self::$gl['scf-show'];
 		$buttonOrder 	= self::$sy['scf-button-pos'];
 		$checkoutTxt	= esc_html( self::$gl['sct-ft-chkbtn'] );
-		$buttonDesign 	= self::$sy['scf-btns-theme'];
 		$buttonClass 	=  xoo_wsc_frontend()->get_button_classes( 'array', array( 'xoo-wsc-ft-btn' ) );
 
 		$isChkoutLogin 	= !is_user_logged_in() && self::$gl['scf-chklogin-en'] === "yes" && function_exists('xoo_el');

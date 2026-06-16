@@ -215,101 +215,6 @@ jQuery(document).ready(function($){
 
 
 
-	/*$('button.xoo-as-run-import').on( 'click', function(){
-
-		var textarea = $(this).siblings('textarea'),
-			settings = textarea.val();
-
-		if( !settings ) return;
-
-		if( !confirm( 'This will override your current settings. Are you sure?' ) ) return;
-
-		$(this).addClass('xoo-as-processing');
-
-		var data = JSON.parse(settings);
-
-		var fields = {};
-
-		$.each( data, function( index, field ){
-
-			if( fields[ field.name ] ){
-				if( Array.isArray( fields[ field.name ]  ) ){
-					fields[ field.name ].push( field.value ); 
-				}
-				else{
-					fields[ field.name ] = [
-						fields[ field.name ],
-						field.value
-					];
-				}
-			}
-			else{
-				fields[ field.name ] = field.value;
-			}
-
-		} )
-
-		console.log(fields);
-
-		$.each( fields, function( id, value ){
-
-			var $el = $('[name="'+id+'"]');
-
-			if( !$el.length ) return;
-
-			var $settingCont = $el.closest( '.xoo-as-setting' );
-
-			if( !$settingCont.length ) return;
-
-			var type = $settingCont.attr('data-setting');
-
-			if( type === 'checkbox' ){ //switch gives two values
-				value = value[1];
-			}
-
-			if( type === 'checkbox_list' || type === 'checkbox' ){
-				$settingCont.find('input[type="checkbox"]').prop('checked', false);
-			}
-			else if( type === 'radio' ){
-				$settingCont.find( 'input[type="radio"]' ).prop('checked', false);
-			}
-
-			if( Array.isArray( value ) && type !== 'select' ){
-
-				$.each( value, function( index, optionValue ){
-
-					var $option = $settingCont.find('[value="'+optionValue+'"]');
-
-					if( !$option.length ) return;
-
-					if( type === 'checkbox_list' ){
-						$option.prop('checked', true );
-					}
-
-				} );
-			
-			}
-			else{
-
-				if( type === 'checkbox' || type === 'radio'){
-					$settingCont.find('input[value="'+value+'"]').prop('checked', true);
-				}
-				else{
-					$el.val( value );
-				}
-				
-			}
-
-			$el.trigger('change');
-
-		} )
-
-		$(this).removeClass('xoo-as-processing');
-		textarea.val('');
-		$('.xoo-as-imported').addClass('xoo-as-active');
-	} );*/
-
-
 	//On import settings click
 	$('.xoo-as-setimport').on( 'click', function(){
 		$('.xoo-as-exim, .xoo-as-imported').removeClass('xoo-as-active');
@@ -541,4 +446,185 @@ jQuery(document).ready(function($){
 		'top': $('#wpadminbar').outerHeight() + 10
 	}); 
 
+
+	$(document).on( 'click', '.xoo-set-tab', function(){
+
+		var $trigger 	= $(this),
+			target 		= $trigger.data('xootab'),
+			$wrapper 	= $trigger.closest('.xoo-tabs-cont');
+
+		$trigger.addClass('xoo-tabactive').siblings('[data-xootab]').removeClass('xoo-tabactive');
+
+		$wrapper.find('[data-xootab]').removeClass('xoo-tabactive');
+
+		$wrapper.find('[data-xootab="' + target + '"]').addClass('xoo-tabactive');
+
+	});
+
+
+
+
+	var settingPreviewer = {
+
+		init: function(){
+
+			this.events();
+
+			$('.xoo-btn-setting').each(function(){
+
+				var group = $(this).data('field_id');
+
+				if( group ){
+					settingPreviewer.update( group );
+				}
+
+			});
+
+		},
+
+		events: function(){
+
+			$(document).on(
+				'input change',
+				'.xoo-btn-setting input, .xoo-btn-setting select',
+				this.onChange
+			);
+
+		},
+
+		onChange: function(){
+
+			var group = $(this)
+				.closest('.xoo-btn-setting')
+				.data('field_id');
+
+			if( group ){
+				settingPreviewer.update( group );
+			}
+
+		},
+
+		update: function( group ){
+
+			var values = this.getValues( group );
+
+			this.render( group, values );
+
+		},
+
+		getValues: function( group ){
+
+			var values = {};
+
+			$('[name^="' + group + '["]').each(function(){
+
+				var path = this.name
+					.replace( group, '' )
+					.match( /\[([^\]]+)\]/g );
+
+				if( !path ) return;
+
+				path = path.map(function( key ){
+					return key.slice( 1, -1 );
+				});
+
+				var current = values;
+
+				for( var i = 0; i < path.length - 1; i++ ){
+					current[ path[i] ] = current[ path[i] ] || {};
+					current = current[ path[i] ];
+				}
+
+				current[ path[ path.length - 1 ] ] = $(this).val();
+
+			});
+
+			return values;
+
+		},
+
+
+		getCSS: function( selector, values ){
+
+			var border 			= values.border || {},
+				hover 			= values.hover || {},
+				hoverBorder 	= hover.border || {},
+				text 			= values.text || {};
+
+			var css = `
+				${selector}{
+					max-width:${values.width || ''}${values.width_unit || ''};
+					height:${values.height || ''}${values.height_unit || ''};
+
+					background:${values.bgColor || ''};
+					color:${values.txtColor || ''};
+
+					font-weight:${text.fontWeight || 500};
+					font-style:${text.fontStyle || 'normal'};
+					font-size:${text.fontSize || 15}${text.fontSizeUnit || 'px'};
+					text-transform:${text.textTransform || 'none'};
+
+					border:${border.size || 0}px ${border.style || 'solid'} ${border.color || 'transparent'};
+					border-radius:${border.radius || 0}px;
+					width: 100%;
+				}
+
+				${selector}:hover{
+					background:${hover.bgColor || values.bgColor || ''};
+					color:${hover.txtColor || values.txtColor || ''};
+
+					border:${hoverBorder.size || border.size || 0}px ${hoverBorder.style || border.style || 'solid'} ${hoverBorder.color || border.color || 'transparent'};
+					border-radius:${hoverBorder.radius || border.radius || 0}px;
+				}
+			`;
+
+			return css;
+		},
+
+		render: function( group, values ){
+
+			var styleID 		= 'xoo-btn-style-' + group.replace( /[^a-z0-9]/gi, '-' ),
+				selector 		= '.xoo-btn-setting[data-field_id="' + group + '"] .xoo-btn-preview button';
+
+			var css = this.getCSS( selector, this.getValues( group ) );
+
+			$('#' + styleID).remove();
+
+			$('<style>', {
+				id: styleID,
+				text: css
+			}).appendTo('head');
+
+		}
+
+	};
+
+
+	
+	settingPreviewer.init();
+
+	xoo_admin_params.settingPreviewer = settingPreviewer;
+
+
+	$('body').on( 'click', '.xoo-as-resetval', function(){
+
+		var $settingCont = $(this).closest('.xoo-as-setting');
+
+		if( $settingCont.data('setting') === 'wp_editor' && $settingCont.find('.wp-editor-area').length ){
+
+
+			var editorId 	= $settingCont.find('.wp-editor-area').attr('id'),
+			 	editor 		= tinymce.get(editorId);
+
+			if (editor) {
+			    editor.setContent(JSON.parse($(this).data('default')));
+			    editor.save();
+			    $('#' + editorId).trigger('change');
+			}
+		}
+
+		
+	} )
+
+	
 })

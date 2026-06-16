@@ -75,18 +75,11 @@ $bpBgColor		= $sy['scbp-bgcolor'];
 
 
 /* Footer */
+$new_btn_layout = !isset( $sy['scf-btn-newlayout'] ) || $sy['scf-btn-newlayout'] === "yes";
+$buttonRows 	= $sy['scf-btns-row'];
 $footerStick 	= $sy['scf-stick'];
 $buttonsOrder  	= $sy['scf-button-pos'];
-$buttonPadding 	= $sy['scf-btn-padding'];
-$buttonRows 	= $sy['scf-btns-row'];
-$buttonTheme 	= $sy['scf-btns-theme'];
-$buttonbgColor 	= $sy['scf-btn-bgcolor'];
-$buttontxtColor = $sy['scf-btn-txtcolor'];
-$buttonBorder 	= $sy['scf-btn-border'];
 
-$HVbuttonbgColor 	= $sy['scf-btnhv-bgcolor'];
-$HVbuttontxtColor 	= $sy['scf-btnhv-txtcolor'];
-$HVbuttonBorder 	= $sy['scf-btnhv-border'];
 
 $ftrPadding 	= $sy['scf-padding'];
 $ftrBgColor 	= $sy['scf-bgcolor'];
@@ -124,21 +117,40 @@ else{
 ?>
 
 
+<?php if( $new_btn_layout  ): ?>
+	<?php  echo xoo_wsc_helper()->get_button_css( '.xoo-wsc-ft-buttons-cont a.xoo-wsc-ft-btn', $sy['scf-btn-main'] ); ?>
+	<?php  echo xoo_wsc_helper()->get_button_css( '.xoo-wsc-empty-cart .xoo-wsc-btn', $sy['scf-btn-main'] ); ?>
+<?php else: ?>
 
-<?php if( $buttonTheme === 'custom' ): ?>
+	<?php
 
-.xoo-wsc-ft-buttons-cont a.xoo-wsc-ft-btn, .xoo-wsc-container .xoo-wsc-btn {
-	background-color: <?php echo $buttonbgColor ?>;
-	color: <?php echo $buttontxtColor ?>;
-	border: <?php echo $buttonBorder ?>;
-	padding: <?php echo $buttonPadding ?>;
-}
+		$buttonPadding 		= $sy['scf-btn-padding'];
+		$buttonTheme 		= $sy['scf-btns-theme'];
+		$buttonbgColor 		= $sy['scf-btn-bgcolor'];
+		$buttontxtColor 	= $sy['scf-btn-txtcolor'];
+		$buttonBorder 		= $sy['scf-btn-border'];
+		$HVbuttonbgColor 	= $sy['scf-btnhv-bgcolor'];
+		$HVbuttontxtColor 	= $sy['scf-btnhv-txtcolor'];
+		$HVbuttonBorder 	= $sy['scf-btnhv-border'];
 
-.xoo-wsc-ft-buttons-cont a.xoo-wsc-ft-btn:hover, .xoo-wsc-container .xoo-wsc-btn:hover {
-	background-color: <?php echo $HVbuttonbgColor ?>;
-	color: <?php echo $HVbuttontxtColor ?>;
-	border: <?php echo $HVbuttonBorder ?>;
-}
+	?>
+
+	<?php if( $buttonTheme === 'custom' ): ?>
+
+		.xoo-wsc-ft-buttons-cont a.xoo-wsc-ft-btn, .xoo-wsc-container .xoo-wsc-btn {
+			background-color: <?php echo $buttonbgColor ?>;
+			color: <?php echo $buttontxtColor ?>;
+			border: <?php echo $buttonBorder ?>;
+			padding: <?php echo $buttonPadding ?>;
+		}
+
+		.xoo-wsc-ft-buttons-cont a.xoo-wsc-ft-btn:hover, .xoo-wsc-container .xoo-wsc-btn:hover {
+			background-color: <?php echo $HVbuttonbgColor ?>;
+			color: <?php echo $HVbuttontxtColor ?>;
+			border: <?php echo $HVbuttonBorder ?>;
+		}
+
+	<?php endif; ?>
 
 <?php endif; ?> 
 
@@ -439,3 +451,17 @@ span.xoo-wsch-icon{
 .xoo-wsc-smr-del{
 	font-size: <?php echo $bodyIconSize; ?>px
 }
+
+<?php if( $sy['scm-info-loc'] === "body_end_stick" ): ?>
+
+.xoo-wsc-body{
+	display: flex;
+	flex-direction: column;
+}
+
+.xoo-wsc-body .xoo-wsc-info-cont{
+	margin-top: auto;
+	margin-bottom: 5px;
+}
+
+<?php endif; ?>

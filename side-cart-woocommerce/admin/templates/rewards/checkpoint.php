@@ -22,7 +22,17 @@
 				<label><input type="checkbox" value="yes" name="<?php echo $id ?>[enable]" {{ data.enable == 'yes' ? 'checked' : '' }}> Enable</label>
 			</div>
 
-			
+			<# if ( data.type === "discount" ) { #>
+
+				<div class="xoo-wsc-chkpoint-setting">
+					<label>Type</label>
+					<select name="<?php echo $id ?>[discount_type]">
+						<option value="percentage" {{ data.discount_type == 'percentage' ? 'selected' : '' }}>Percentage</option>
+						<option value="amount" {{ data.discount_type == 'amount' ? 'selected' : '' }}>Fixed Amount</option>
+					</select>
+				</div>
+
+			<# } #>
 
 			<div class="xoo-wsc-chkpoint-setting">
 				<label>Title</label>
@@ -49,34 +59,34 @@
 
 			<# if ( data.type === "gift" ) { #>
 
-			<div class="xoo-wsc-chkpoint-setting xoo-wsc-bar-prodsearch">
+				<div class="xoo-wsc-chkpoint-setting xoo-wsc-bar-prodsearch">
 
-				<label>Free Gift Products</label>
+					<label>Free Gift Products</label>
 
-				<select class="wc-product-search" multiple="multiple" name="<?php echo $id ?>[gift_ids][]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce' ); ?>" data-action="woocommerce_json_search_products_and_variations">
-				</select>
+					<select class="wc-product-search" multiple="multiple" name="<?php echo $id ?>[gift_ids][]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woocommerce' ); ?>" data-action="woocommerce_json_search_products_and_variations">
+					</select>
 
-				<div class="xoo-wsc-barpsearch-defaults">
-					<# _.each( data.gift_ids , function(option_value, index) { #>
-						<input type="hidden" name="<?php echo $id ?>[gift_ids][]" value="{{option_value}}">
-					<# }) #>
+					<div class="xoo-wsc-barpsearch-defaults">
+						<# _.each( data.gift_ids , function(option_value, index) { #>
+							<input type="hidden" name="<?php echo $id ?>[gift_ids][]" value="{{option_value}}">
+						<# }) #>
+					</div>
+
+					<span class="xoo-scbhk-desc">Add gift products</span>
+
 				</div>
 
-				<span class="xoo-scbhk-desc">Add gift products</span>
 
-			</div>
+				<div class="xoo-wsc-chkpoint-setting">
+					<label>Gift Quantity</label>
+					<input type="number" value="{{data.gift_qty}}" step="any" name="<?php echo $id ?>[gift_qty]">
+				</div>
 
+				<div class="xoo-wsc-chkpoint-setting">
+					<input type="hidden" name="<?php echo $id ?>[showcase]" value="no">
+					<label><input type="checkbox" value="yes" name="<?php echo $id ?>[showcase]" {{ data.showcase == 'yes' ? 'checked' : '' }}> Showcase Gifts<span class="xoo-scbhk-desc"> (If disabled, products will be kept as a suprise)</span></label>
 
-			<div class="xoo-wsc-chkpoint-setting">
-				<label>Gift Quantity</label>
-				<input type="number" value="{{data.gift_qty}}" step="any" name="<?php echo $id ?>[gift_qty]">
-			</div>
-
-			<div class="xoo-wsc-chkpoint-setting">
-				<input type="hidden" name="<?php echo $id ?>[showcase]" value="no">
-				<label><input type="checkbox" value="yes" name="<?php echo $id ?>[showcase]" {{ data.showcase == 'yes' ? 'checked' : '' }}> Showcase Gifts<span class="xoo-scbhk-desc"> (If disabled, products will be kept as a suprise)</span></label>
-
-			</div>
+				</div>
 
 
 			<# } #>
@@ -84,7 +94,7 @@
 
 			<# if ( data.type === "discount" ) { #>
 				<div class="xoo-wsc-chkpoint-setting">
-					<label>Discount (In %)</label>
+					<label>Discount</label>
 					<input type="number" value="{{data.discount}}" step="any" name="<?php echo $id ?>[discount]">
 				</div>
 			<# } #>

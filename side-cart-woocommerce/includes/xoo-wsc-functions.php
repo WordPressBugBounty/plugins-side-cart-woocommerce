@@ -100,4 +100,40 @@ function xoo_wsc_single_product_atc_fix(){
 }
 add_action( 'init', 'xoo_wsc_single_product_atc_fix' );
 
+
+function xoo_wsc_display_infobox(){
+	echo '<div class="xoo-wsc-info-cont">';
+	echo xoo_wsc_helper()->get_general_option('sct-info');
+	echo '</div>';
+}
+
+
+
+/* Information box location */
+function xoo_wsc_add_infobox_hook(){
+
+	$location 	= xoo_wsc_helper()->get_style_option('scm-info-loc');
+
+	if( $location === 'body_end' || $location === 'body_end_stick' || ( $location === 'mobile_body' && wp_is_mobile() ) ){
+		$hook = 'xoo_wsc_body_end';
+	}
+	elseif( $location === 'body_start' ){
+		$hook = 'xoo_wsc_body_start';
+	}
+	elseif( $location === 'footer_end' ){
+		$hook = 'xoo_wsc_footer_end';
+	}
+	elseif( $location === 'footer_start' || $location === 'mobile_body' ){
+		$hook = 'xoo_wsc_footer_start';
+	}
+	else{
+		return;
+	}
+
+	add_action( $hook, 'xoo_wsc_display_infobox' );
+
+}
+add_action( 'xoo_wsc_header_start', 'xoo_wsc_add_infobox_hook' );
+
+
 ?>

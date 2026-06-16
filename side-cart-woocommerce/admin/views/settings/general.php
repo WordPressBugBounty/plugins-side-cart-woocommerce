@@ -305,7 +305,6 @@ $settings = array(
 	),
 
 
-
 	/*** SUGGESTED PRODUCTS ***/
 
 	array(
@@ -589,6 +588,21 @@ $settings = array(
 		'default' 		=> 'Your Cart',
 	),
 
+
+
+	array(
+		'callback' 		=> 'wp_editor',
+		'title' 		=> 'Information Box',
+		'id' 			=> 'sct-info',
+		'section_id' 	=> 'texts',
+		'default' 		=> xoo_wsc_admin_settings()->default_info_text(),
+		'desc' 			=> '',
+		'args' 			=> array(
+			'reset' 	=> 'yes'
+		)
+	),
+
+
 	array(
 		'callback' 		=> 'text',
 		'title' 		=> 'Continue Button',
@@ -639,7 +653,7 @@ $settings = array(
 		'title' 		=> 'Footer Savings',
 		'id' 			=> 'sct-savings',
 		'section_id' 	=> 'texts',
-		'default' 		=> 'Your savings on this order are',
+		'default' 		=> '💵 Your savings on this order are',
 	),
 
 
@@ -667,6 +681,7 @@ $settings = array(
 		'section_id' 	=> 'texts',
 		'default' 		=> 'Remove',
 	),
+
 
 
 	array(

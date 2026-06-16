@@ -68,6 +68,7 @@ $sections = array(
 
 
 	/* Style TAB Sections */
+
 	array(
 		'title' => 'Main',
 		'id' 	=> 'sc_main',
@@ -121,11 +122,7 @@ $sections = array(
 		'tab' 	=> 'style',
 	),
 
-	array(
-		'title' => 'Button Design',
-		'id' 	=> 'sc_button',
-		'tab' 	=> 'style',
-	),
+
 
 	array(
 		'title' => 'Suggested Products',

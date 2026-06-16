@@ -31,7 +31,7 @@ class Xoo_Wsc_Loader{
 		$this->define( "XOO_WSC_PATH", plugin_dir_path( XOO_WSC_PLUGIN_FILE ) ); // Plugin path
 		$this->define( "XOO_WSC_PLUGIN_BASENAME", plugin_basename( XOO_WSC_PLUGIN_FILE ) );
 		$this->define( "XOO_WSC_URL", untrailingslashit( plugins_url( '/', XOO_WSC_PLUGIN_FILE ) ) ); // plugin url
-		$this->define( "XOO_WSC_VERSION", "2.7.4" ); //Plugin version
+		$this->define( "XOO_WSC_VERSION", "2.7.6" ); //Plugin version
 		$this->define( "XOO_WSC_LITE", true );
 	}
 
@@ -188,6 +188,7 @@ class Xoo_Wsc_Loader{
 			
 			$glOptions 	= xoo_wsc_helper()->get_general_option();
 			$syOptions 	= xoo_wsc_helper()->get_style_option();
+			$avOptions 	= xoo_wsc_helper()->get_advanced_option();
 
 			if( version_compare( $db_version, '2.5', '<')  ){
 				$glOptions['scb-show'][] 		= 'product_qty';
@@ -227,12 +228,24 @@ class Xoo_Wsc_Loader{
 			}
 
 			if( version_compare( $db_version, '2.7.5', '<')  ){
-				if( !isset( $syOptions['sck-count-size'] ) ){
-					$syOptions['sck-count-size'] = 28;
-				}
+				$syOptions['sck-count-size'] = 28;
 			}
 			
+
+			if( version_compare( $db_version, '2.7.6', '<')  ){
+
+				$syOptions['scf-btn-newlayout'] = 'no';
+				$syOptions['scb-empty-img'] 	= '';
+				$avOptions['m-fetch-cart'] 		= 'page_load';
+				$glOptions['sct-info'] 			= '';
+				$syOptions['scm-info-loc'] 		= 'footer_start';
+
+				update_option( 'xoo-wsc-had-old-btn-layout', 'yes' );
+
+			}
+
 			
+			update_option('xoo-wsc-av-options', $avOptions );
 			update_option('xoo-wsc-gl-options', $glOptions );
 			update_option('xoo-wsc-sy-options', $syOptions );
 
