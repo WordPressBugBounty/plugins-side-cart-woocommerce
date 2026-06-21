@@ -79,6 +79,7 @@ jQuery(document).ready(function($){
 		getPreviewCSS: function() {},
 		getPreviewHTMLData: function() {},
 		pageLoading: true,
+		buildTimout: null,
 
 		init: function(){
 			this.initColorPicker();
@@ -140,14 +141,22 @@ jQuery(document).ready(function($){
 
 		build: function(){
 			if( this.pageLoading ) return; // prevent multiple building event on page load due to 'change' event
-			this.setFormValues();
-			this.buildHTML();
-			this.buildCSS();
-			AnimateCard.init();
+
+			clearTimeout( Customizer.buildTimout );
+
+			Customizer.buildTimout = setTimeout( function(){
+				Customizer.setFormValues();
+				Customizer.buildHTML();
+				Customizer.buildCSS();
+				AnimateCard.init();
+			}, 200 );
+			
 		},
 
 
 		buildCSS: function(){
+
+			console.log('built');
 
 			var css = '';
 
@@ -478,18 +487,34 @@ jQuery(document).ready(function($){
 				
 			}
 
+			const buttonThemeSelectors = {
+				'xoo-wsc-sy-options[scm-btntheme-cart]': 'a.xoo-wsc-ft-btn-cart',
+				'xoo-wsc-sy-options[scm-btntheme-checkout]': 'a.xoo-wsc-ft-btn-checkout',
+				'xoo-wsc-sy-options[scm-btntheme-continue]': 'a.xoo-wsc-ft-btn-continue',
+			}
 
 
+			
+			var $buttonStyleTag = $('.xoo-wsc-button-theme-styles'),
+				$buttonStyleTag = $buttonStyleTag.length ? $buttonStyleTag : $('<div class="xoo-wsc-button-theme-styles"></div>').insertAfter(Customizer.$styleTag);
 
-			var $buttonStyleTag = $('.xoo-as-button-preview-style') || $('<div class="xoo-as-button-preview-style"></div>').insertAfter(Customizer.$styleTag);
 
-			if( xoo_admin_params.settingPreviewer && xoo_admin_params.settingPreviewer.getCSS && ( !$('input[name="xoo-wsc-sy-options[scf-btn-newlayout]"]').length ||  this.sy('scf-btn-newlayout') === 'yes' ) ){
+			if( xoo_admin_params.BtnTheme && ( !$('input[name="xoo-wsc-sy-options[scf-btn-newlayout]"]').length ||  this.sy('scf-btn-newlayout') === 'yes' ) ){
 
-				if ($buttonStyleTag.length === 0) {
-					$buttonStyleTag = $('<div class="xoo-as-button-preview-style"></div>').insertAfter(Customizer.$styleTag);
-				}
-				
-				var buttonCSS = xoo_admin_params.settingPreviewer.getCSS( '.xoo-wsc-ft-buttons-cont a.xoo-wsc-ft-btn', xoo_admin_params.settingPreviewer.getValues('xoo-wsc-sy-options[scf-btn-main]') );
+				var buttonCSS = '';
+
+				$.each( buttonThemeSelectors, function( settingID, classSelector ){
+
+					const themeID 	= $('select[name="'+settingID+'"]').val();
+
+					const themeValues = themeID ? xoo_admin_params.BtnTheme.getThemes( themeID ) : null;
+
+					 if( !themeValues ) return true;
+
+					buttonCSS += xoo_admin_params.BtnTheme.getCSS( themeValues, classSelector );
+
+				} );
+
 					
 				$buttonStyleTag.html('<style>'+buttonCSS+'</style>');
 			
@@ -847,17 +872,6 @@ jQuery(document).ready(function($){
 	})
 
 	
-
-
-	$('input[name="xoo-wsc-sy-options[scm-width]"]').on('change', function(){
-		if( !$('body').hasClass('folded') && $('.xoo-settings-container').width() < 900 ){
-			var $collapse = $('#collapse-button');
-			if( $collapse.length ){
-				$collapse.trigger('click');
-			}
-		}
-		$(window).trigger('resize');
-	}).trigger('change');
 
 
 
@@ -1286,6 +1300,31 @@ jQuery(document).ready(function($){
 		} ).trigger('change');
 
 	}
+
+
+	setTimeout( function(){
+
+		var onceResized = false;
+
+		$(window).resize(function(){
+
+			if( onceResized ) return;
+
+			const $container 	= $('.xoo-as-container');
+
+			if( $container.length && $container.innerWidth() <= 900 ){
+				
+				SideCart.toggle('close');
+				
+			}
+
+			onceResized = true;
+
+		}).trigger('resize');
+
+	}, 400 );
+
+
 
 	
 	

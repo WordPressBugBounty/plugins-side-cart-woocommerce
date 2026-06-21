@@ -24,60 +24,6 @@ else{
 
 $settings = array(
 
-	/***** Shortcode ****/
-
-	array(
-		'callback' 		=> 'select',
-		'title' 		=> 'Add basket to menu',
-		'id' 			=> 'shbk-menu',
-		'section_id' 	=> 'sh_bk',
-		'args' 			=> array(
-			'options' 	=> $menuOptions,
-			'multiple' => 'yes',
-			'custom_attributes' => array(
-				'data-select2box' => 'yes',
-				'multiple' => 'yes',
-				'data-placeholder' => 'Select menu'
-			)
-		),
-		'default' 	=> 'none',
-		'desc' 			=> empty( $menus ) ? 'You don\'t have any menu on your site yet. Please <a href="'.admin_url( 'nav-menus.php' ).'" target="__blank">create</a> one first.' : ''
-	),
-
-	array(
-		'callback' 		=> 'checkbox_list',
-		'title' 		=> 'Show',
-		'id' 			=> 'shbk-show',
-		'section_id' 	=> 'sh_bk',
-		'args' 			=> array(
-			'options' 	=> array(
-				'icon' 			=> 'Icon',
-				'subtotal' 		=> 'Subtotal',
-				'count' 		=> 'Count',
-			)
-		),
-		'default' 	=> array(
-			'icon', 'subtotal', 'count',
-		),
-	),
-
-
-	array(
-		'callback' 		=> 'checkbox_list',
-		'title' 		=> 'When cart is empty, hide',
-		'id' 			=> 'shbk-hide',
-		'section_id' 	=> 'sh_bk',
-		'args' 			=> array(
-			'options' 	=> array(
-				'icon' 			=> 'Icon',
-				'subtotal' 		=> 'Subtotal',
-				'count' 		=> 'Count',
-			)
-		),
-		'default' 	=> array(),
-	),
-
-
 	/** SIDE CART HEADER **/
 
 	array(
@@ -577,7 +523,58 @@ $settings = array(
 	),
 
 
+	/***** Shortcode ****/
 
+	array(
+		'callback' 		=> 'select',
+		'title' 		=> 'Add basket to menu',
+		'id' 			=> 'shbk-menu',
+		'section_id' 	=> 'sh_bk',
+		'args' 			=> array(
+			'options' 	=> $menuOptions,
+			'multiple' => 'yes',
+			'custom_attributes' => array(
+				'data-select2box' => 'yes',
+				'multiple' => 'yes',
+				'data-placeholder' => 'Select menu'
+			)
+		),
+		'default' 	=> 'none',
+		'desc' 			=> empty( $menus ) ? 'You don\'t have any menu on your site yet. Please <a href="'.admin_url( 'nav-menus.php' ).'" target="__blank">create</a> one first.' : ''
+	),
+
+	array(
+		'callback' 		=> 'checkbox_list',
+		'title' 		=> 'Show',
+		'id' 			=> 'shbk-show',
+		'section_id' 	=> 'sh_bk',
+		'args' 			=> array(
+			'options' 	=> array(
+				'icon' 			=> 'Icon',
+				'subtotal' 		=> 'Subtotal',
+				'count' 		=> 'Count',
+			)
+		),
+		'default' 	=> array(
+			'icon', 'subtotal', 'count',
+		),
+	),
+
+
+	array(
+		'callback' 		=> 'checkbox_list',
+		'title' 		=> 'When cart is empty, hide',
+		'id' 			=> 'shbk-hide',
+		'section_id' 	=> 'sh_bk',
+		'args' 			=> array(
+			'options' 	=> array(
+				'icon' 			=> 'Icon',
+				'subtotal' 		=> 'Subtotal',
+				'count' 		=> 'Count',
+			)
+		),
+		'default' 	=> array(),
+	),
 
 	/***** TEXTS *****/
 	array(

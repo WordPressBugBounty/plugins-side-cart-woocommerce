@@ -2,6 +2,73 @@
 
 $settings = array(
 
+	array(
+		'callback' 		=> 'button_theme_creator',
+		'title' 		=> '',
+		'id' 			=> 'scm-btnthemes',
+		'section_id' 	=> 'sc_button_theme_creator',
+		'default' 		=> array(
+			'theme_default1' => xoo_wsc_helper()->get_button_values( array(
+				'theme_id' => 'theme_default1',
+				'title' => 'Default Theme #1'
+			) ),
+			'theme_default2' => xoo_wsc_helper()->get_button_values( array(
+				'theme_id' => 'theme_default2',
+				'title' 	=> 'Default Theme #2',
+				'bgColor' 	=> '#dde6ed',
+				'txtColor' 	=> '#27374d',
+				'size_type' => 'auto',
+				'border' 	=> array(
+					'size' => 2,
+					'color' => '#27374d'
+				),
+				'hover' => array(
+					'bgColor' 	=> '#27374d',
+					'txtColor' 	=> '#dde6ed',
+					'border' 	=> array(
+						'size' => 2,
+						'color' => '#dde6ed'
+					),
+				)
+			) )
+		)
+	),
+
+	array(
+		'callback' 		=> 'button_theme_selector',
+		'title' 		=> 'Cart Button',
+		'id' 			=> 'scm-btntheme-cart',
+		'section_id' 	=> 'sc_button_theme_creator',
+		'default' 		=> 'theme_default1'
+	),
+
+
+	array(
+		'callback' 		=> 'button_theme_selector',
+		'title' 		=> 'Checkout Button',
+		'id' 			=> 'scm-btntheme-checkout',
+		'section_id' 	=> 'sc_button_theme_creator',
+		'default' 		=> 'theme_default1'
+	),
+
+	array(
+		'callback' 		=> 'button_theme_selector',
+		'title' 		=> 'Continue Shopping',
+		'id' 			=> 'scm-btntheme-continue',
+		'section_id' 	=> 'sc_button_theme_creator',
+		'default' 		=> 'theme_default1'
+	),
+
+	array(
+		'callback' 		=> 'button_theme_selector',
+		'title' 		=> 'Empty Cart',
+		'id' 			=> 'scm-btntheme-empty',
+		'section_id' 	=> 'sc_button_theme_creator',
+		'default' 		=> 'theme_default2'
+	),
+
+
+
 	/** SIDE CART MAIN **/
 
 	array(
@@ -1196,9 +1263,14 @@ $settings = array(
 				'xoo-wsc-sy-options[scf-btnhv-txtcolor]' 	=> array( 'yes' ),
 				'xoo-wsc-sy-options[scf-btns-theme]' 		=> array( 'yes' ),
 				'xoo-wsc-sy-options[scf-btn-main]' 			=> array( 'unchecked' ),
+				'xoo-wsc-sy-options[scm-btntheme-cart]' 	=> array( 'unchecked' ),
+				'xoo-wsc-sy-options[scm-btntheme-checkout]' => array( 'unchecked' ),
+				'xoo-wsc-sy-options[scm-btntheme-continue]' => array( 'unchecked' ),
+				'xoo-wsc-sy-options[scm-btntheme-empty]' 	=> array( 'unchecked' ),
 			)
 		),
-		'default' => 'yes'
+		'default'	=> 'yes',
+		'desc' 		=> 'You can create button themes with new button layout'
 		
 	),
 
@@ -1216,33 +1288,6 @@ $settings = array(
 		),
 		'default' 	=> 'custom',
 		'desc' 		=> 'If set to theme design, all the below options will be ineffective. Theme button design can be inconsistent and vary from theme to theme.',
-		
-	),
-
-
-	array(
-		'callback' 		=> 'button',
-		'title' 		=> 'Button',
-		'id' 			=> 'scf-btn-main',
-		'section_id' 	=> 'sc_footer',
-		'default' 		=> array(
-			'width'         => 100,
-			'width_unit' 	=> '%',
-			'height'        => 45,
-			'bgColor'       => '#27374d',
-			'txtColor'      => '#dde6ed',
-			'border' => array(
-				'color'     => '#dde6ed',
-			),
-
-			'hover' => array(
-				'bgColor'       => '#dde6ed',
-				'txtColor'      => '#27374d',
-				'border' => array(
-					'color'     => '#27374d',
-				),
-			),
-		)
 		
 	),
 

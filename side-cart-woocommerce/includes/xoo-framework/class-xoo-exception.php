@@ -1,10 +1,13 @@
 <?php 
 
+namespace XooWSC\Framework;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Xoo_Exception extends Exception{
+
+class Xoo_Exception extends \Exception{
 
 	public $wpErrorCode = null;
 

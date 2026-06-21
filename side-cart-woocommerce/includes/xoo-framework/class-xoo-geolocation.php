@@ -1,5 +1,7 @@
 <?php
 
+namespace XooWSC\Framework;
+
 class Xoo_Geolocation{
 
 	private static $_instance;

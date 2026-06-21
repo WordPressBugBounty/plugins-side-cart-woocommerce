@@ -275,7 +275,7 @@
 					<option value="discount">Discount</option>
 					<option value="display">Only for display</option>
 				</select>
-				<button type="button" class="button button-secondary xoo-wsc-bar-add-chkpoint">+ Add checkpoint</button>
+				<button type="button" class="xoo-btn xoo-secondary-btn xoo-wsc-bar-add-chkpoint">+ Add checkpoint</button>
 			</div>
 
 			<div class="xoo-wsc-bar-checkpoints"></div>

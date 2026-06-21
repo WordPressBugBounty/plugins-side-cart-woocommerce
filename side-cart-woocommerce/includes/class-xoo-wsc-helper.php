@@ -1,5 +1,7 @@
 <?php
 
+use XooWSC\Framework\Xoo_Helper;
+
 class Xoo_Wsc_Helper extends Xoo_Helper{
 
 	protected static $_instance = null;
@@ -28,13 +30,6 @@ class Xoo_Wsc_Helper extends Xoo_Helper{
 	}
 
 
-	public function box_shadow_desc($value){
-		$html = '<a href="https://box-shadow.dev/" target="__blank">Preview & click on "Show code" -> copy value</a>';
-		if( $value ){
-			$html .= 'Default: '.$value;
-		}
-		return $html;
-	}
 
 	public function get_usage_data(){
 

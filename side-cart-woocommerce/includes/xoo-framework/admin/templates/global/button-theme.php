@@ -1,6 +1,6 @@
 <script type="text/html" id="tmpl-xoo-as-btntheme">
 
-	<?php $id = $field_id.'[%$]' ?>
+	<?php $id = $field_id.'[{{data.theme_id}}]' ?>
 
 	<?php
 
@@ -25,27 +25,55 @@
 		'italic' => 'Italic',
 	);
 
+	$styles = array(
+		'none'   => 'None',
+		'hidden' => 'Hidden',
+		'solid'  => 'Solid',
+		'dashed' => 'Dashed',
+		'dotted' => 'Dotted',
+		'double' => 'Double',
+		'groove' => 'Groove',
+		'ridge'  => 'Ridge',
+		'inset'  => 'Inset',
+		'outset' => 'Outset',
+	);
 	?>
 
-	<div class="xoo-btntheme xoo-btntheme-accordion">
+	<div class="xoo-btntheme xoo-accordion xoo-btn-setting" data-field_id="<?php echo $id ?>">
 
-		<div class="xoo-acc-head xoo-theme-head"><span class="dashicons dashicons-plus-alt2"></span><span class="dashicons dashicons-minus"></span><div class="xoo-btntheme-title">{{data.title}}</div><span class="dashicons dashicons-trash xoo-btntheme-delete"></span></div>
+		<div class="xoo-acc-head xoo-theme-head">
+	
+			<div class="xoo-btntheme-title">{{data.title}}</div>
+			<span class="dashicons dashicons-trash xoo-btntheme-delete"></span>
+
+			<div class="xoo-btn-preview-wrap">
+
+				<div class="xoo-btn-preview">
+					<button type="button">Button</button>
+				</div>
+
+				<style id="{{data.theme_id}}"></style>
+
+			</div>
+
+			<div class="xoo-acc-ctas">
+				<div class="xoo-acc-ctaedit"><span class="xoo-as-icon xoo-icon-edit"></span>Edit</div>
+				<div class="xoo-acc-ctaclose xoo-acc-ctaedit"><span class="xoo-as-icon xoo-icon-close"></span>Close</div>
+				<div class="xoo-acc-ctacopy"><span class="xoo-as-icon xoo-icon-copy"></span>Duplicate</div>
+				<div class="xoo-acc-ctadel"><span class="xoo-as-icon xoo-icon-delete"></span></div>
+			</div>
+		</div>
 
 		<div class="xoo-acc-cont">
 
-			<input type="text" value="{{data.title}}" name="<?php echo $id ?>[barTitle]" class="xoo-btntheme-title-input">
+			<div class="xoo-btntheme-head">
+				<span class="xoo-btnset-desc">Customize the appearance of your button</span>
+				<input type="text" value="{{data.title}}" name="<?php echo $id ?>[title]" class="xoo-btntheme-title-input">
+			</div>
 
-			<div class="xoo-btn-setting xoo-tabs-cont" data-field_id="<?php echo $field_id ?>">
+			<div class="xoo-tabs-cont">
 
-					<span class="xoo-btnset-desc">Customize the appearance of your button</span>
-
-					<div class="xoo-btn-preview-wrap">
-
-						<div class="xoo-btn-preview">
-							<button type="button">Button</button>
-						</div>
-
-					</div>
+				<input type="hidden" value="{{data.theme_id}}" name="<?php echo $id ?>[theme_id]" class="xoo-btntheme-id">
 
 					<div class="xoo-setting-tabs">
 
@@ -86,14 +114,41 @@
 
 							<div class="xoo-row-settings">
 
-								<div>
+								<div class="xoo-btnrowset-sizetype">
 
-									<i>Width</i>
+									<i>Size Type</i>
+
+									<select name="<?php echo $id ?>[size_type]">
+										<?php $adminObj->templatejs_select_options( 'size_type', array(
+											'auto' 		=> 'Auto width & height',
+											'custom' 	=> 'Custom Size'
+										) ) ?>
+									</select>
+
+								</div>
+
+								<div data-size_type="auto">
+
+									<i>Padding ↨ </i>
+									<input type="number" name="<?php echo $id; ?>[padding_v]" value="{{data.padding_v}}" >
+
+								</div>
+
+								<div data-size_type="auto">
+
+									<i>Padding ⟷</i>
+									<input type="number" name="<?php echo $id; ?>[padding_h]" value="{{data.padding_h}}" >
+
+								</div>
+
+								<div data-size_type="custom">
+
+									<i>Custom Width</i>
 									<input type="number" name="<?php echo $id; ?>[width]" value="{{data.width}}" >
 
 								</div>
 
-								<div>
+								<div data-size_type="custom">
 
 									<i>Unit</i>
 
@@ -103,16 +158,16 @@
 
 								</div>
 
-								<div>
+								<div  data-size_type="custom">
 
-									<i>Height</i>
+									<i>Custom Height</i>
 									<input type="number" name="<?php echo $id; ?>[height]" value="{{data.height}}" >	
 
 								</div>
 
 
 
-								<div>
+								<div data-size_type="custom">
 
 									<i>Unit</i>
 									<select name="<?php echo $id ?>[height_unit]">
@@ -154,8 +209,6 @@
 
 								<div>
 
-									<# console.log( data ); #>
-
 									<i>Font Size</i>
 
 									<input type="number" name="<?php echo $id; ?>[text][fontSize]" value="{{data.text.fontSize}}">
@@ -181,7 +234,7 @@
 											'none' => 'None',
 											'lowercase' => 'Lowercase',
 											'uppercase' => 'Uppercase',
-											'capitalize' => 'capitalize'
+											'capitalize' => 'Capitalize'
 										) ) ?>
 									</select>
 
@@ -193,7 +246,39 @@
 
 						<!-- Border -->
 						<div class="xoo-btn-row">
+
+							<span class="xoo-btnrow-head"><span class="xoo-icon-border xoo-icon"></span>Border</span>
 							
+							<div class="xoo-row-settings">
+
+								<div>
+									<i>Size</i>
+									<input name="<?php echo $id; ?>[border][size]" type="number" min="0" value="{{data.border.size}}">
+								</div>
+
+								<div>
+									<i>Color</i>
+									<input name="<?php echo $id; ?>[border][color]" type="text" class="xoo-as-color-input" value="{{data.border.color}}">
+								</div>
+
+								<div>
+
+									<i>Style</i>
+									<select name="<?php echo $id; ?>[border][style]">
+
+										<?php $adminObj->templatejs_select_options( 'border.style', $styles ) ?>
+
+									</select>
+
+
+								</div>
+
+								<div>
+									<i>Radius</i>
+									<input name="<?php echo $id; ?>[border][radius]" type="number" min="0" value="{{data.border.radius}}">
+								</div>
+
+							</div>
 						</div>
 
 					</div>
@@ -214,7 +299,7 @@
 
 								<div>
 									<i>Text Color</i>
-									<input type="text" class="xoo-as-color-input" name="<?php echo $id; ?>[hover][txtColor]" value="{{data.hover.bgColor}}" >
+									<input type="text" class="xoo-as-color-input" name="<?php echo $id; ?>[hover][txtColor]" value="{{data.hover.txtColor}}" >
 								</div>
 
 							</div>
@@ -222,7 +307,39 @@
 						</div>
 
 						<div class="xoo-btn-row">
-							<!-- Border -->
+
+							<span class="xoo-btnrow-head"><span class="xoo-icon-border xoo-icon"></span>Border</span>
+							
+							<div class="xoo-row-settings">
+
+								<div>
+									<i>Size</i>
+									<input name="<?php echo $id; ?>[hover][border][size]" type="number" min="0" value="{{data.hover.border.size}}">
+								</div>
+
+								<div>
+									<i>Color</i>
+									<input name="<?php echo $id; ?>[hover][border][color]" type="text" class="xoo-as-color-input" value="{{data.hover.border.color}}">
+								</div>
+
+								<div>
+
+									<i>Style</i>
+									<select name="<?php echo $id; ?>[hover][border][style]">
+
+										<?php $adminObj->templatejs_select_options( 'hover.border.style', $styles ) ?>
+
+									</select>
+
+
+								</div>
+
+								<div>
+									<i>Radius</i>
+									<input name="<?php echo $id; ?>[hover][border][radius]" type="number" min="0" value="{{data.hover.border.radius}}">
+								</div>
+
+							</div>
 						</div>
 
 					</div>

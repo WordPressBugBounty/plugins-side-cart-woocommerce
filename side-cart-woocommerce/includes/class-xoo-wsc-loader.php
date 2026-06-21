@@ -31,7 +31,7 @@ class Xoo_Wsc_Loader{
 		$this->define( "XOO_WSC_PATH", plugin_dir_path( XOO_WSC_PLUGIN_FILE ) ); // Plugin path
 		$this->define( "XOO_WSC_PLUGIN_BASENAME", plugin_basename( XOO_WSC_PLUGIN_FILE ) );
 		$this->define( "XOO_WSC_URL", untrailingslashit( plugins_url( '/', XOO_WSC_PLUGIN_FILE ) ) ); // plugin url
-		$this->define( "XOO_WSC_VERSION", "2.7.6" ); //Plugin version
+		$this->define( "XOO_WSC_VERSION", "2.7.7" ); //Plugin version
 		$this->define( "XOO_WSC_LITE", true );
 	}
 
@@ -241,6 +241,46 @@ class Xoo_Wsc_Loader{
 				$syOptions['scm-info-loc'] 		= 'footer_start';
 
 				update_option( 'xoo-wsc-had-old-btn-layout', 'yes' );
+
+			}
+
+
+			if( version_compare( $db_version, '2.7.7', '<')  ){
+
+			
+
+				//Create theme from older button settings
+				if( isset( $syOptions['scf-btn-main'] ) && !empty( $syOptions['scf-btn-main'] ) && ( !isset( $syOptions['scf-btn-newlayout'] ) || $syOptions['scf-btn-newlayout'] === "yes" ) ){
+
+					$button_settings = xoo_wsc_helper()->get_button_values( $syOptions['scf-btn-main'] );
+
+					$default_theme1 = array_merge(
+						$button_settings,
+						array(
+							'theme_id' => 'theme_default1',
+							'title'    => 'Default Theme #1',
+						)
+					);
+
+					$default_theme2 = array_merge(
+						$button_settings,
+						array(
+							'theme_id'  => 'theme_default2',
+							'title'     => 'Default Theme #2',
+							'size_type' => 'auto',
+						)
+					);
+
+					$syOptions['scm-btnthemes'] = array(
+						'theme_default1' => $default_theme1,
+						'theme_default2' => $default_theme2,
+					);
+
+					$syOptions['scm-btntheme-cart'] = $syOptions['scm-btntheme-checkout'] = $syOptions['scm-btntheme-continue'] = 'theme_default1';
+					
+					$syOptions['scm-btntheme-empty'] = 'theme_default2';
+					
+				}
 
 			}
 
