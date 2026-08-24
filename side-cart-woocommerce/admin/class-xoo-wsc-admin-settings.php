@@ -78,7 +78,7 @@ class Xoo_Wsc_Admin_Settings{
 
 		if( $type === 'style' && get_option( 'xoo-wsc-had-old-btn-layout',true ) !== "yes" ){
 			foreach  ($settings as $index => $setting ) {
-				if( in_array( $setting['id'], array( 'scf-btns-theme', 'scf-btn-border', 'scf-btn-bgcolor', 'scf-btn-txtcolor', 'sscf-btnhv-border', 'scf-btnhv-bgcolor', 'scf-btnhv-txtcolor', 'scf-btn-newlayout' ) ) ){
+				if( in_array( $setting['id'], array( 'scf-btns-theme', 'scf-btn-border', 'scf-btn-bgcolor', 'scf-btn-txtcolor', 'scf-btnhv-border', 'scf-btnhv-bgcolor', 'scf-btnhv-txtcolor', 'scf-btn-newlayout' ) ) ){
 					unset( $settings[$index] );
 				}
 			}
@@ -425,11 +425,6 @@ class Xoo_Wsc_Admin_Settings{
 					<span>You can change this later from "Style"</span>
 				</div>
 
-				<div>
-					<span class="xoo-wsc-adpopup-head">Quantity & Price Display</span>
-					<?php echo xoo_wsc_helper()->admin->get_setting_html_pop( 'general', 'sc_body', 'scbp-qpdisplay' ); ?>
-				</div>
-
 				<button type="button" class="xoo-wsc-adpopup-go button-primary button">Let's Go!</button>
 			</div>
 			<div class="xoo-wsc-adpop-opac"></div>
@@ -526,26 +521,26 @@ class Xoo_Wsc_Admin_Settings{
 		ob_start();
 
 		?>
-		<div style="padding:5px 20px;">
+		<div style="padding:5px 5px;">
 			<table style="margin:auto;border-collapse:collapse;border:none; width: 350px;  text-align: center; background-color: transparent;" border="0">
 				<tr>
-					<td align="center" style="padding:5px 12px;font-size:12px;border:none;text-align: center;background-color: transparent;">
+					<td align="center" style="padding:5px 12px;font-size:13px;border:none;text-align: center;background-color: transparent;">
 						<div align="center" style="text-align:center;" a>
-							<img src="<?php echo XOO_WSC_URL.'/admin/assets/images/info/secure.png'?>" style="width:30px;height:auto;" class="aligncenter">
+							<img src="<?php echo XOO_WSC_URL.'/admin/assets/images/info/check.png'?>" style="width:30px;height:auto;" class="aligncenter">
 						</div>
-						<i>Secure Checkout</i>
+						<span style="color: #000000;"><b>Secure Checkout</b></span>
 					</td>
-					<td align="center" style="padding:5px 12px;font-size:12px;border:none;text-align: center; background-color: transparent;">
+					<td align="center" style="padding:5px 12px;font-size:13px;border:none;text-align: center; background-color: transparent;">
 						<div align="center" style="text-align:center;">
-							<img src="<?php echo XOO_WSC_URL.'/admin/assets/images/info/shipping.png'?>" style="width:30px;height:auto;" class="aligncenter">
+							<img src="<?php echo XOO_WSC_URL.'/admin/assets/images/info/man.png'?>" style="width:30px;height:auto;" class="aligncenter">
 						</div>
-						<i>Fast Shipping</i>
+						<span style="color: #000000;"><b>Fast Shipping</b></span>
 					</td>
-					<td align="center" style="padding:5px 12px;font-size:12px;border:none;text-align: center;background-color: transparent;">
+					<td align="center" style="padding:5px 12px;font-size:13px;border:none;text-align: center;background-color: transparent;">
 						<div align="center" style="text-align:center;">
 							<img src="<?php echo XOO_WSC_URL.'/admin/assets/images/info/returns.png'?>" style="width:30px;height:auto;" class="aligncenter">
 						</div>
-						<i>Easy Returns</i>
+						<span style="color: #000000;"><b>Easy Returns</b></span>
 					</td>
 				</tr>
 			</table>

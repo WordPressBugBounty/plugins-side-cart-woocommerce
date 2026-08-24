@@ -774,9 +774,7 @@ span.xoo-as-info {
     margin-right: 0;
 }
 
-.xoo-as-disable-pro a.xoo--sec-pro{
-    display: none;
-}
+
 
 ul.xoo-sc-tabs li[data-tab="pro"] {
     background-color: #ffd700;
@@ -853,14 +851,13 @@ textarea.wp-editor-area {
 
 .xoo-as-sidebar {
     align-self: flex-start;
-    top: 40px;
     position: relative;
     background-color: #fff;
     padding: 20px;
     max-width: 220px;
     width: 100%;
     position: sticky;
-    margin-top: 58px;
+    top: 114px;
 }
 
 .xoo-as-sbar-close {
@@ -985,6 +982,11 @@ span.xoo-btnset-desc {
 .xoo-btn-preview{
     display: flex;
     justify-content: center;
+    max-width: 400px;
+}
+
+.xoo-btntheme.xoo-acc-active .xoo-btn-preview {
+    justify-content: flex-start;
 }
 
 .xoo-btn-preview button{
@@ -994,7 +996,6 @@ span.xoo-btnset-desc {
     justify-content: center;
     cursor: pointer;
     max-width: 100%;
-    margin: 0 auto;
 }
 
 .xoo-btn-preview-wrap {
@@ -1496,3 +1497,113 @@ button.xoo-as-form-save.xoo-btn {
     width: 100%;
     max-width: 100%;
 }
+
+
+
+.xoo-as-setsidebar {
+    overflow-y: auto;
+    scrollbar-width: thin;              /* Firefox */
+    scrollbar-color: #efefef #ffffff;      /* Firefox */
+}
+
+/* Chrome, Edge, Safari */
+.xoo-as-setsidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.xoo-as-setsidebar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 8px;
+}
+
+.xoo-as-setsidebar::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 8px;
+    border: 2px solid #f1f1f1;
+}
+
+.xoo-as-setsidebar::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+
+.xoo-as-disable-pro a.xoo-sec-pro{
+    display: none;
+}
+
+
+.xoo-addon {
+    display: inline-block;
+    max-width: 350px;
+    padding: 20px 20px 60px 20px;
+    border: 2px solid #eee;
+    margin: 20px;
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    line-height: 27px;
+    background-color: #fff;
+}
+
+.xoo-addon-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.xoo-addon .dashicons {
+    font-size: 31px;
+    display: table;
+    margin: 0 auto;
+    color: #3e659e;
+    background-color: #ffffff;
+    padding: 14px;
+    border-radius: 50%;
+    box-shadow: 0 0px 12px #eee;
+}
+
+
+
+span.xoo-ao-title {
+    display: block;
+    text-align: center;
+    margin: 16px;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+.xoo-ao-btns {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    justify-content: center;
+    gap: 15px;
+}
+
+.xoo-ao-btns a {
+    text-decoration: none;
+    background-color: #2a9d8f;
+    color: #fff;
+    padding: 5px 15px;
+    font-weight: 600;
+    border-radius: 5px;
+    min-width: 40px;
+    text-align: center;
+}
+
+.xoo-ao-desc {
+    margin-bottom: 20px;
+}
+
+.xoo-sc-tab-content[data-tab="info"] {
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 8px 24px rgba(0, 0, 0, .05);
+    border-radius: 5px;
+    border: 1px solid #e5e7eb;
+}
+

@@ -49,8 +49,9 @@ class Xoo_Wsc_Helper extends Xoo_Helper{
 
 function xoo_wsc_helper(){
 	return Xoo_Wsc_Helper::get_instance( 'side-cart-woocommerce', XOO_WSC_PATH, array(
-		'pluginFile' => XOO_WSC_PLUGIN_FILE,
-		'pluginName' =>	'Woocommerce Side Cart',
+		'pluginFile' 	=> XOO_WSC_PLUGIN_FILE,
+		'pluginName' 	=>	'Woocommerce Side Cart',
+		'version_key' 	=> 'xoo-wsc-version'
 	) );
 }
 xoo_wsc_helper();

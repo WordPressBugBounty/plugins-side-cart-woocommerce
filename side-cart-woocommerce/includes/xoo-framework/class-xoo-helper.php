@@ -2,6 +2,10 @@
 
 namespace XooWSC\Framework;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class Xoo_Helper{
 
 	public $slug, $path, $helperArgs;
@@ -273,6 +277,7 @@ class Xoo_Helper{
 
 		$tempData = $this->get_theme_templates_data();
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if(  ( ( time() - $tempData['last_scanned'] ) > ( 86400 * 1 ) ) || ( isset( $_GET['scan_templates'] ) && isset( $_GET['slug'] ) && $_GET['slug'] === $this->slug ) ){
 			$this->update_theme_templates_data();
 			wp_safe_redirect( remove_query_arg( array( 'scan_templates', 'slug' ) ) );
@@ -346,7 +351,7 @@ class Xoo_Helper{
 							}	
 						}
 
-						return new WP_Error( 'failed', 'Some files failed to upload'. ' - ' . $file['name'] . '('.$attachment_id->get_error_message().')' );
+						return new \WP_Error( 'failed', 'Some files failed to upload'. ' - ' . $file['name'] . '('.$attachment_id->get_error_message().')' );
 					} 
 					else{
 						$attachmentIDS[ $field_id ][] = $attachment_id;
@@ -513,6 +518,10 @@ class Xoo_Helper{
 				'padding_v' 	=> 10,
 				'padding_h' 	=> 20,
 
+				'margin_v' 		=> 0,
+				'margin_h' 		=> 0,
+				'position' 		=> 'center',
+
 				'text' => array(
 					'fontWeight' 		=> 500,
 					'fontStyle' 		=> 'normal',
@@ -573,6 +582,7 @@ class Xoo_Helper{
 			'width'            => $is_auto ? 'max-content' : '100%',
 			'height'           => $is_auto ? 'auto' : $settings['height'] . $settings['height_unit'],
 			'padding'          => $is_auto ? $settings['padding_v'] . 'px ' . $settings['padding_h'] . 'px' : '5px 10px',
+			'margin'           => $settings['margin_v'] . 'px ' . $settings['margin_h'] . 'px',
 
 			'background-color' => $settings['bgColor'],
 			'color'            => $settings['txtColor'],
@@ -586,10 +596,20 @@ class Xoo_Helper{
 			'border-style'     => $settings['border']['style'],
 			'border-color'     => $settings['border']['color'],
 			'border-radius'    => $settings['border']['radius'] . 'px',
-			'display' 			=> 'inline-flex',
+			'display' 			=> 'flex',
 			'align-items' 		=> 'center',
 			'justify-content' 	=> 'center'
 		);
+
+		if( $settings['position'] === 'center' ){
+			$normal_css['margin-left'] = $normal_css['margin-right'] = 'auto'; 
+		}
+		elseif ( $settings['position'] === 'left' ){
+			$normal_css['margin-right'] = 'auto';
+		}
+		elseif ( $settings['position'] === 'right' ){
+			$normal_css['margin-left'] = 'auto';
+		}
 
 		$hover_css = array(
 			'background-color' => $settings['hover']['bgColor'],
@@ -645,8 +665,10 @@ class Xoo_Helper{
 
 		foreach ( $theme_selectors as $theme_id => $selectors ) {
 
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $this->get_button_css(
 				$selectors,
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$themes[ $theme_id ]
 			);
 

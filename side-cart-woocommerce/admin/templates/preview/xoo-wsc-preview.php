@@ -28,7 +28,7 @@ $totalSavings 		= 0;
 			
 		}
 
-		$qty = rand(1,3);
+		$qty = rand(2,5);
 
 		$totalQty += $qty;
 
@@ -40,7 +40,6 @@ $totalSavings 		= 0;
 			'product_quantity' 	=> $qty,
 			'product_subtotal' 	=>  wc_price( $qty * (int) $product->get_price() ),
 			'product_meta' 		=> '',
-			'sales_count' 		=> 500,
 			'product' 			=> $product,
 		);
 
@@ -81,17 +80,17 @@ $information_box = '<div class="xoo-wsc-info-cont">{{{data.informationBox}}}</di
 
 <script type="text/html" id="tmpl-xoo-as-preview">
 
-<?php ob_start(); ?>
+	<?php ob_start(); ?>
 
-<# if ( data.basket.countType === "quantity" ) { #>
-	<?php echo $totalQty; ?>
-<# }else{ #>
-	<?php echo $numberOfProducts; ?>
-<# } #>
+	<# if ( data.basket.countType === "quantity" ) { #>
+		<?php echo $totalQty; ?>
+	<# }else{ #>
+		<?php echo $numberOfProducts; ?>
+	<# } #>
 
-<?php $quantity = ob_get_clean(); ?>
+	<?php $quantity = ob_get_clean(); ?>
 
-	<div class="xoo-wsc-markup">
+	<div class="xoo-wsc-markup xoo-wsc-align-{{data.openFrom}}">
 		<div class="xoo-wsc-modal">
 			<div class="xoo-wsc-container">
 
@@ -100,7 +99,11 @@ $information_box = '<div class="xoo-wsc-info-cont">{{{data.informationBox}}}</di
 					<div class="xoo-wsc-basket">
 
 						<span class="xoo-wsc-items-count">
-							<?php echo $quantity; ?>
+							<# if ( data.basket.countType === "quantity" ) { #>
+								<?php echo $totalQty; ?>
+							<# }else{ #>
+								<?php echo $numberOfProducts; ?>
+							<# } #>
 						</span>
 						
 						<span class="xoo-wsc-bki {{{data.basket.icon}}}"></span>
@@ -117,13 +120,11 @@ $information_box = '<div class="xoo-wsc-info-cont">{{{data.informationBox}}}</di
 					<# } #>
 				</div>
 
-
 				<div class="xoo-wsc-body">
 
 					<# if ( data.informationBoxLocation === 'body_start' ) { #>
 						<?php echo $information_box ?>
 					<# } #>
-
 
 					<div class="xoo-wsc-products xoo-wsc-pattern-<# if (data.product.layout === 'cards') { #>card<# } else { #>row<# } #>">
 						<?php echo $productHTML; ?>
@@ -139,7 +140,7 @@ $information_box = '<div class="xoo-wsc-info-cont">{{{data.informationBox}}}</di
 				<div class="xoo-wsc-footer">
 					<?php xoo_wsc_helper()->get_template( 'xoo-wsc-footer-preview.php', array( 'footer_template' => $footer_template, 'information_box' => $information_box ), XOO_WSC_PATH.'/admin/templates/preview' ); ?>
 				</div>
+				
 			</div>
-		</div>
-	</div>
+
 </script>

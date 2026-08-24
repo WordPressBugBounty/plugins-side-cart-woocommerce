@@ -25,6 +25,48 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.xoo-icon-sendmail:before {
+  content: "\e92d";
+}
+.xoo-icon-send:before {
+  content: "\e92e";
+}
+.xoo-icon-check:before {
+  content: "\e92f";
+}
+.xoo-icon-lock:before {
+  content: "\e92b";
+}
+.xoo-icon-shield:before {
+  content: "\e92c";
+}
+.xoo-icon-mail:before {
+  content: "\e92a";
+}
+.xoo-icon-sms:before {
+  content: "\e926";
+}
+.xoo-icon-signup:before {
+  content: "\e927";
+}
+.xoo-icon-login2:before {
+  content: "\e928";
+}
+.xoo-icon-auto:before {
+  content: "\e922";
+}
+.xoo-icon-popup:before {
+  content: "\e923";
+}
+.xoo-icon-popup2:before {
+  content: "\e924";
+}
+.xoo-icon-redirect:before {
+  content: "\e925";
+}
+.xoo-icon-woo:before {
+  content: "\e921";
+}
 .xoo-icon-paint:before {
   content: "\e905";
 }
@@ -39,6 +81,15 @@
 }
 .xoo-icon-light:before {
   content: "\e904";
+}
+.xoo-icon-enter:before {
+  content: "\e929";
+}
+.xoo-icon-signin:before {
+  content: "\e929";
+}
+.xoo-icon-login:before {
+  content: "\e929";
 }
 .xoo-icon-help:before {
   content: "\e91f";

@@ -178,8 +178,10 @@ class Xoo_Wsc_Frontend{
 
 		if( !xoo_wsc()->isSideCartPage() ) return;
 
-		echo '<div class="xoo-wsc-markup-notices"></div>';
+		xoo_wsc_helper()->get_template( '/global/markup-notice.php' );
+		
 		xoo_wsc_helper()->get_template( 'xoo-wsc-markup.php' );
+
 
 	}
 

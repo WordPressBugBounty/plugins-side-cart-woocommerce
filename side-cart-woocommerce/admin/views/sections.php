@@ -129,7 +129,6 @@ $sections = array(
 		'title' => 'Quantity Box',
 		'id' 	=> 'scb_qty',
 		'tab' 	=> 'style',
-		'pro' 	=> 'yes',
 		'icon' 	=> 'xoo-icon-header'
 	),
 

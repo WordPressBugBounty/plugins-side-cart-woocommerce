@@ -73,6 +73,18 @@ $bPradius		= (int) $sy['scbp-bradius'];
 $bPshadow		= $sy['scbp-shadow'];
 $bpBgColor		= $sy['scbp-bgcolor'];
 
+/* Quantity */
+$qtyStyle 		= $sy['scbq-style'];
+$qtyWidth 		= $sy['scbq-width'];
+$qtybtnsize 	= $sy['scbq-btnsize'];
+$qtyHeight 		= $sy['scbq-height'];
+$btnBorColor 	= $sy['scbq-box-border'];
+$inputBgColor 	= $sy['scbq-input-bgcolor'];
+$inputTxtColor 	= $sy['scbq-input-txtcolor'];
+$btnBgColor 	= $sy['scbq-box-bgcolor'];
+$btnTxtColor 	= $sy['scbq-box-txtcolor'];
+
+
 
 /* Footer */
 $new_btn_layout = !isset( $sy['scf-btn-newlayout'] ) || $sy['scf-btn-newlayout'] === "yes";
@@ -94,6 +106,7 @@ $SCbasketColor 	= $sy['shbk-color'];
 $SCcountBG 		= $sy['shbk-count-bg'];
 $SCcountColor 	= $sy['shbk-count-color'];
 $SCtxtColor 	= $sy['shbk-txt-color'];
+
 
 if( $buttonRows === 'three' ){
 	$gridCols = '1fr 1fr 1fr';
@@ -331,6 +344,37 @@ span.xoo-wsch-close {
 	justify-content: <?php echo $bpDisplay ?>;
 }
 <?php endif; ?>
+
+
+/***** Quantity *****/
+
+.xoo-wsc-qty-box{
+	max-width: <?php echo $qtyWidth ?>px;
+}
+
+.xoo-wsc-qty-box.xoo-wsc-qtb-square{
+	<?php echo xoo_wsc_helper()->get_border_css_value( $sy['scbq-box-border'] ); ?>
+}
+
+input[type="number"].xoo-wsc-qty{
+	background-color: <?php echo $inputBgColor ?>;
+	color: <?php echo $inputTxtColor ?>;
+	height: <?php echo $qtyHeight ?>px;
+	line-height: <?php echo $qtyHeight ?>px;
+	<?php echo xoo_wsc_helper()->get_border_css_value( $sy['scbq-input-border'] ); ?>
+}
+
+
+.xoo-wsc-chng{
+	background-color: <?php echo $btnBgColor ?>;
+	color: <?php echo $btnTxtColor ?>;
+	width: <?php echo $qtybtnsize ?>px;
+}
+
+.xoo-wsc-qtb-circle .xoo-wsc-chng{
+	height: <?php echo $qtybtnsize ?>px;
+	line-height: <?php echo $qtybtnsize ?>px;
+}
 
 
 /** Shortcode **/

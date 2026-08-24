@@ -13,88 +13,87 @@ jQuery(document).ready(function($){
 
 	var markupTimeout = null;
 
-	class Notice{
+	var Notice = {
 
-		constructor( $modal ){
-			this.$modal = $modal;
-			this.timeout = null;
-		}
+		timeout: null,
 
-		add( notice, type = 'success', clearPrevious = true ){
+		markupTimeout: null,
 
-			var $noticeCont = this.$modal.find('.xoo-wsc-notice-container');
+		$cartNoticeCont: function(){
+			return $('.xoo-wsc-markup').find('.xoo-wsc-notice-container');
+		},
+
+		$markupNoticeCont: function(){
+			return $('.xoo-wsc-markup-notices')
+		},
+
+		add: function( notice, type = 'success', clearPrevious = true ){
 
 			if( clearPrevious ){
-				$noticeCont.html('');
+				Notice.$cartNoticeCont().html('');
 			}
 
 			var noticeHTML = type === 'success' ? xoo_wsc_params.html.successNotice.toString().replace( '%s%', notice ) : xoo_wsc_params.html.errorNotice.toString().replace( '%s%', notice );
 
-			$noticeCont.html( noticeHTML );
+			Notice.$cartNoticeCont().html( noticeHTML );
 
-		}
+		},
 
-		showNotification(){
 
-			Notice.showMarkupNotice();
+		setHTML: function(noticeHTML){
+			Notice.$cartNoticeCont().add( Notice.$markupNoticeCont() ).html(noticeHTML);
+		},
 
-			var $noticeCont = this.$modal.find('.xoo-wsc-notice-container');
+		showNotification: function(){
+
+			if( !cart.isOpen() ){
+				Notice.showMarkupNotice();
+				return;
+			}
+
+			Notice.$cartNoticeCont().slideDown();
+			
+			clearTimeout(Notice.timeout);
+
+			Notice.timeout = setTimeout(function(){
+				Notice.$cartNoticeCont().slideUp('slow');
+			}, xoo_wsc_params.notificationTime );
+
+		},
+
+
+		hideNotification: function(){
+			Notice.$cartNoticeCont().hide();
+		},
+
+		hideMarkupNotice: function(){
+			Notice.$markupNoticeCont().removeClass('xoo-wsc-active');
+		},
+
+
+		showMarkupNotice: function(){
+
+			var $markupNotice = Notice.$markupNoticeCont();
+
+			var $noticeCont = $markupNotice.find('.xoo-wsc-notice-container .xoo-wsc-notices');
 
 			if( !$noticeCont.length || $noticeCont.children().length === 0 ) return;
 
-			$noticeCont.slideDown();
-			
-			clearTimeout(this.timeout);
-
-			this.timeout = setTimeout(function(){
-				$noticeCont.slideUp('slow',function(){
-					//$noticeCont.html('');
-				});
-			},xoo_wsc_params.notificationTime )
-
-		}
-
-
-
-		hideNotification(){
-			this.$modal.find('.xoo-wsc-notice-container').hide();
-		}
-
-		static hideMarkupNotice(){
-			Notice.$noticeContainer().removeClass('xoo-wsc-active');
-		}
-
-		static $noticeContainer(){
-			return $('.xoo-wsc-markup-notices')
-		}
-
-		static showMarkupNotice(){
-
-			if( cart.isOpen() ) return;
-
-			var $markupNotice = Notice.$noticeContainer();
-
-			var $notices = $markupNotice.find('.xoo-wsc-notice-container .xoo-wsc-notices');
-
-			if( !$notices.length || $notices.children().length === 0 ) return;
-
 			setTimeout(function(){$markupNotice.addClass('xoo-wsc-active')},10);
 			
-			clearTimeout(markupTimeout);
+			clearTimeout(Notice.markupTimeout);
 
-			markupTimeout = setTimeout(function(){
+			Notice.markupTimeout = setTimeout(function(){
 				$markupNotice.removeClass('xoo-wsc-active');
 			},xoo_wsc_params.notificationTime )
 		}
 	}
-
 
 	class Container{
 
 		constructor( $modal, container ){
 			this.$modal 	= $modal;
 			this.container 	= container || 'cart';
-			this.notice 	= new Notice( this.$modal );
 		}
 
 		isOpen(){
@@ -102,12 +101,12 @@ jQuery(document).ready(function($){
 		}
 
 		eventHandlers(){
-			$(document.body).on( 'wc_fragments_refreshed updated_checkout', this.onCartUpdate.bind(this) );
+			$(document.body).on( 'wc_fragments_loaded updated_checkout', this.onCartUpdate.bind(this) );
 		}
 
 		onCartUpdate(){
 			this.unblock();
-			this.notice.showNotification();
+			Notice.showNotification();
 		}
 
 		setAjaxData( data, noticeSection ){
@@ -158,7 +157,7 @@ jQuery(document).ready(function($){
 
 			$(document.body).trigger( 'xoo_wsc_' + this.container + '_toggled', [ type ] );
 
-			this.notice.hideNotification();
+			Notice.hideNotification();
 
 		}
 
@@ -217,8 +216,6 @@ jQuery(document).ready(function($){
 
 		updateFragments( response ){
 
-			console.log('updated');
-
 			if( response.fragments ){
 
 				$( document.body ).trigger( 'xoo_wsc_before_loading_fragments', [ response ] );
@@ -242,7 +239,7 @@ jQuery(document).ready(function($){
 
 				}
 
-				$( document.body ).trigger( 'wc_fragments_refreshed' );
+				$( document.body ).trigger( 'wc_fragments_loaded' );
 
 				this.unblock();
 
@@ -266,6 +263,8 @@ jQuery(document).ready(function($){
 			super( $modal, 'cart' );
 
 			this.cartLoaded = false;
+			this.baseQty 				= 1;
+			this.qtyUpdateDelay 		= null;
 
 			this.refreshFragmentsOnPageLoad();
 			this.eventHandlers();
@@ -285,6 +284,8 @@ jQuery(document).ready(function($){
 
 			super.eventHandlers();
 
+			this.$modal.on( 'click', '.xoo-wsc-chng', this.toggleQty.bind(this) );
+			this.$modal.on( 'change', '.xoo-wsc-qty', this.changeInputQty.bind(this) );
 			this.$modal.on( 'click', '.xoo-wsc-smr-del', this.deleteIconClick.bind(this) );
 			this.$modal.on( 'click', '.xoo-wsch-close, .xoo-wsc-opac, .xoo-wsc-cart-close', this.closeCartOnClick.bind(this) );
 			this.$modal.on( 'click', '.xoo-wsc-basket', this.toggleCart.bind(this) );
@@ -318,6 +319,101 @@ jQuery(document).ready(function($){
 
 			this.initMasonryLayout();
 
+		}
+
+		toggleQty(e){
+
+			var $toggler 	= $(e.currentTarget),
+				$input 		= $toggler.siblings('.xoo-wsc-qty');
+
+			if( !$input.length ) return;
+
+			var baseQty = this.baseQty = parseFloat( $input.val() ),
+				step 	= parseFloat( $input.attr('step') ),
+				action 	= $toggler.hasClass( 'xoo-wsc-plus' ) ? 'add' : 'less',
+				newQty 	= action === 'add' ? baseQty + step : baseQty - step;
+
+			
+			$input.val(newQty).trigger('change');
+
+		}
+
+		changeInputQty(e){
+
+			Notice.hideNotification();
+
+			var $_this	= this,
+ 				$input 	= $(e.currentTarget),
+				newQty 	= parseFloat( $input.val() ),
+				step 	= parseFloat( $input.attr('step') ),
+				min 	= parseFloat( $input.attr('min') ),
+				max 	= parseFloat( $input.attr('max') ),
+				invalid = false,
+				message = false;
+
+			//Validation
+			
+			if( isNaN( newQty )  || newQty < 0 || newQty < min  ){
+				invalid = true;
+			}
+			else if( newQty > max ){
+				invalid = true;
+				message = xoo_wsc_params.strings.maxQtyError.replace( '%s%', max );
+			}
+			else if( !Number.isInteger(newQty/step ) ){
+				invalid = true;
+				message = xoo_wsc_params.strings.stepQtyError.replace( '%s%', step );
+			}
+			
+			//Set back to default quantity
+			if( invalid ){
+				$input.val( this.baseQty );
+				if( message ){
+					Notice.add( message, 'error' );
+					Notice.showNotification();
+				}
+				return;
+			}
+
+			//Update
+			$input.val( newQty );
+
+			clearTimeout( this.qtyUpdateDelay );
+
+			this.qtyUpdateDelay = setTimeout(function(){
+				$_this.updateItemQty( $input.parents('.xoo-wsc-product').data('key'), newQty )
+			}, xoo_wsc_params.qtyUpdateDelay );
+			
+			
+		}
+
+		updateItemQty( cart_key, qty ){
+
+			if( !cart_key || qty === undefined ) return;
+
+			this.block();
+			
+			this.saveScrollPosition();
+
+			var formData = {
+				cart_key: cart_key,
+				qty: qty
+			}
+
+			$.ajax({
+				url: get_wcurl( 'xoo_wsc_update_item_quantity' ),
+				type: 'POST',
+				context: this,
+				data: this.setAjaxData(formData),
+				success: function(response){
+					this.updateFragments( response );
+					$(document.body).trigger( 'xoo_wsc_quantity_updated', [response] );
+					$(document.body).trigger( 'xoo_wsc_cart_updated', [response] );
+					this.setScrollPosition();
+					this.unblock();
+				}
+
+			})
 		}
 
 		toggleCart(e){
@@ -426,8 +522,8 @@ jQuery(document).ready(function($){
 						// Trigger event so themes can refresh other areas.
 						$( document.body ).trigger( 'added_to_cart', [ response.fragments, response.cart_hash, $button ] );
 					}else if(response.error){
-						Notice.$noticeContainer().replaceWith(response.notice);
-						Notice.showMarkupNotice();
+						Notice.setHTML(response.notice);
+						Notice.showNotification();
 					}
 					else{
 						window.location.reload();
@@ -445,18 +541,15 @@ jQuery(document).ready(function($){
 
 		addedToCart( e, response, hash, $button ){
 
-			this.updateFragments( { fragments: response } );
-
-			this.onCartUpdate();
-	
 			var _this = this;
 
-			
+			this.updateFragments( { fragments: response } );
+
 			if( xoo_wsc_params.autoOpenCart === "yes" ){
-				setTimeout(function(){
-					_this.openCart();	
-				},20 )
+				_this.openCart();
 			}
+
+			this.onCartUpdate();
 			
 		}
 

@@ -590,10 +590,51 @@ jQuery(document).ready(function($){
 			}
 
 
+			/* Quantity */
+			selectors['.xoo-wsc-qty-box'] = {
+				'max-width': this.sy('scbq-width' ,'px')
+			}
+
+
+			var qtyboxBorder 		= window.xoo_admin_params.generateBorderCSS( this.sy('scbq-box-border') ),
+				qtyBoxInputBorder 	= window.xoo_admin_params.generateBorderCSS( this.sy('scbq-input-border') );
+
+
+			selectors['.xoo-wsc-qty-box.xoo-wsc-qtb-square'] = {
+				'border': qtyboxBorder.border,
+				'border-radius': qtyboxBorder.borderRadius
+			}
+
+
+			selectors['input[type="number"].xoo-wsc-qty'] = {
+				'border': qtyBoxInputBorder.border,
+				'border-radius': qtyBoxInputBorder.borderRadius,
+				'background-color': 	this.sy( 'scbq-input-bgcolor' ),
+				'color': 				this.sy( 'scbq-input-txtcolor' ),
+				'height': 				this.sy( 'scbq-height','px' ),
+				'line-height': 			this.sy( 'scbq-height','px' ),
+			}
+
+
+			selectors['.xoo-wsc-chng'] = {
+				'background-color': this.sy( 'scbq-box-bgcolor' ),
+				'color': 			this.sy( 'scbq-box-txtcolor' ),
+				'width': 			this.sy('scbq-btnsize' ,'px')
+			}
+
+			selectors['.xoo-wsc-qtb-circle .xoo-wsc-chng'] = {
+				'height'		: this.sy('scbq-btnsize' ,'px'),
+				'line-height'	: this.sy('scbq-btnsize' ,'px')
+			}
+
+			selectors['.xoo-wsc-body .xoo-wsc-ft-totals'] = {
+				'padding': this.sy( 'scbp-padding' ),
+				'margin': this.sy( 'scbp-margin' ),
+			}
+
 			selectors['.xoo-wsc-product dl.variation'] = {
 				'display': this.sy('scbp-var-format') === 'one_line' ? 'flex' : 'block'
 			}
-
 
 			selectors = $.extend({}, selectors, cardSelectors);
 
@@ -631,7 +672,6 @@ jQuery(document).ready(function($){
 				},
 				product: {
 					layout: 				this.sy('scb-playout'),
-					updateQty: 				false,
 					showPImage: 			this.gl('scb-show').includes('product_image'),
 					showPname: 				this.gl('scb-show').includes('product_name'),
 					showPdel: 				this.gl('scb-show').includes('product_del'),
@@ -647,7 +687,9 @@ jQuery(document).ready(function($){
 					deleteText: 			this.gl('sct-delete'),
 					deleteType: 			this.sy('scbp-deltype'),
 					deleteIcon:  			this.sy('scb-del-icon'),
-					priceType:  			this.gl('scb-prod-price')
+					priceType:  			this.gl('scb-prod-price'),
+					updateQty: 				this.gl('scb-update-qty') === "yes",
+					qtyDesign: 				this.sy('scbq-style'),
 
 				},
 				card: {
@@ -684,7 +726,7 @@ jQuery(document).ready(function($){
 				informationBox: this.gl('sct-info')
 			}
 
-			data.product.oneLiner = data.product.qtyPriceDisplay === 'one_liner' && data.product.showPqty && data.product.showPprice && data.product.showPtotal;
+			data.product.oneLiner = data.product.qtyPriceDisplay === 'one_liner' && data.product.showPqty && data.product.showPprice && data.product.showPtotal && !data.product.updateQty;
 
 			return data;
 		},
@@ -708,20 +750,6 @@ jQuery(document).ready(function($){
 	}
 
 	SideCart.init();
-
-
-
-	$('select[name="xoo-wsc-gl-options[m-ajax-atc]"]').on( 'change', function(){
-
-		var $catSetting = $(this).closest('.xoo-as-setting').next();
-
-		if( $(this).val() === 'cat_yes' || $(this).val() === 'cat_no' ){
-			$catSetting.show();
-		}
-		else{
-			$catSetting.hide();
-		}
-	} ).trigger('change');
 
 
 	//Install login popup plugin
@@ -826,7 +854,9 @@ jQuery(document).ready(function($){
 					}
 				} )
 
-				if( !failed ){
+
+
+				if( !failed && !$('input[name="xoo-wsc-gl-options[scb-update-qty]"]').is(':checked') ){
 					$oneLinerSetting.show();
 				}
 
@@ -844,19 +874,6 @@ jQuery(document).ready(function($){
 	$('select[name="xoo-wsc-sy-options[scbp-qpdisplay]"]').on( 'change', function(){
 		$('select[name="xoo-wsc-gl-options[scbp-qpdisplay]"]').val($(this).val());
 	} );
-
-
-	$('select[name="xoo-wsc-gl-options[scbp-qpdisplay]"], select[name="xoo-wsc-sy-options[scbp-qpdisplay]"]').on('change', function(){
-
-		var $toggle = $('input[name="xoo-wsc-sy-options[scbp-card-back][]"][value="total"], input[name="xoo-wsc-sy-options[scbp-card-back][]"][value="price"]').closest('label');
-
-		if( $(this).val() === 'one_liner' ){
-			$toggle.hide();
-		}
-		else{
-			$toggle.show();
-		}
-	}).trigger('change');
 
 
 	$('select[name="xoo-wsc-sy-options[scbp-card-visible]"]').on('change', function(){

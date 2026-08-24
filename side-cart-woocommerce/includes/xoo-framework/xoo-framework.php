@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
 require_once __DIR__.'/xoo-framework-init.php';
 
 if (!function_exists('array_is_list')) {

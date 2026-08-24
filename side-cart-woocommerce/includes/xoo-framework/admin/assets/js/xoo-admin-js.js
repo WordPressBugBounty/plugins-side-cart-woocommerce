@@ -460,7 +460,7 @@ jQuery(document).ready(function($){
 
 			if( $form.length ){
 
-				if( $form.innerWidth() <= 700 ){
+				if( $form.innerWidth() <= 600 ){
 					$('.xoo-as-sidebar').addClass('xoo-as-sbar-collapsed');
 					$form.addClass('xoo-as-break');
 				}
@@ -490,11 +490,6 @@ jQuery(document).ready(function($){
 	$('.xoo-as-sbar-close').on( 'click', function(){
 		$('.xoo-as-sidebar').toggleClass('xoo-as-sbar-collapsed');
 	} );
-
-	$('.xoo-as-sidebar').css({
-		'margin-top': $('.xoo-sc-tbar-tabs').outerHeight(),
-		'top': $('#wpadminbar').outerHeight() + 10
-	}); 
 
 
 	$(document).on( 'click', '.xoo-set-tab', function(){
@@ -821,7 +816,9 @@ jQuery(document).ready(function($){
 
 		    var isAuto = values.size_type === 'auto';
 
-		    return normalSelectors + '{' +
+
+
+		    var css = normalSelectors + '{' +
 
 		        'max-width:' + ( isAuto ? 'none' : ( values.width || '' ) + ( values.width_unit || '' ) ) + ';' +
 		        'width:' + ( isAuto ? 'auto' : '100%' ) + ';' +
@@ -841,13 +838,25 @@ jQuery(document).ready(function($){
 
 		        'border:' + ( border.size || 0 ) + 'px ' + ( border.style || 'solid' ) + ' ' + ( border.color || 'transparent' ) + ';' +
 		        'border-radius:' + ( border.radius || 0 ) + 'px;' +
-		        'display:inline-flex;' +
+		        'display: flex;' +
 				'align-items:center;' +
 				'justify-content:center;'+
+				'margin:' + ( values.margin_v || 0 ) + 'px ' + ( values.margin_h || 0 ) + 'px;';
 
-		    '}' +
 
-		    hoverSelectors + '{' +
+			    if ( values.position === 'center' ) {
+			        css += 'margin-left:auto;margin-right:auto;';
+			    }
+			    else if ( values.position === 'left' ) {
+			        css += 'margin-right:auto;';
+			    }
+			    else if ( values.position === 'right' ) {
+			        css += 'margin-left:auto;';
+			    }
+
+		    css += '}';
+
+		    css += hoverSelectors + '{' +
 
 		        'background-color:' + ( hover.bgColor || values.bgColor || '' ) + ';' +
 		        'color:' + ( hover.txtColor || values.txtColor || '' ) + ';' +
@@ -855,6 +864,8 @@ jQuery(document).ready(function($){
 		        'border-radius:' + ( hoverBorder.radius || border.radius || 0 ) + 'px;' +
 
 		    '}';
+
+		    return css;
 		}
 
 	}
@@ -905,7 +916,49 @@ jQuery(document).ready(function($){
 	});
 
 
-	
+	/**
+	 * Generate CSS border styles as an object.
+	 *
+	 * @param {Object} border
+	 * @param {string|number} border.size
+	 * @param {string} border.color
+	 * @param {string} border.style
+	 * @param {string|number} border.radius
+	 * @param {'border'|'radius'|'all'} [returnType='all']
+	 *
+	 * @returns {Object} CSS style object
+	 */
+	function generateBorderCSS(border = {}, returnType = 'all') {
+	    const defaults = {
+	        size: 0,
+	        color: 'transparent',
+	        style: 'none',
+	        radius: 0,
+	    };
+
+	    const b = { ...defaults, ...border };
+
+	    const size   = Math.max(0, parseFloat(b.size) || 0);
+	    const radius = Math.max(0, parseFloat(b.radius) || 0);
+	    const style  = String(b.style).toLowerCase().replace(/[^a-z]/g, '');
+	    const color  = String(b.color).trim();
+
+	    const css = {};
+
+	    // Border
+	    if (['border', 'all'].includes(returnType)) { 
+	        css.border = `${size}px ${style} ${color}`;
+	    }
+
+	    // Radius
+	    if (['radius', 'all'].includes(returnType)) {
+	        css.borderRadius = `${radius}px`;
+	    }
+
+	    return css;
+	}
+
+	window.xoo_admin_params.generateBorderCSS = generateBorderCSS;
 
 	
 })

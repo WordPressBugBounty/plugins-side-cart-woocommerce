@@ -31,7 +31,7 @@ class Xoo_Wsc_Loader{
 		$this->define( "XOO_WSC_PATH", plugin_dir_path( XOO_WSC_PLUGIN_FILE ) ); // Plugin path
 		$this->define( "XOO_WSC_PLUGIN_BASENAME", plugin_basename( XOO_WSC_PLUGIN_FILE ) );
 		$this->define( "XOO_WSC_URL", untrailingslashit( plugins_url( '/', XOO_WSC_PLUGIN_FILE ) ) ); // plugin url
-		$this->define( "XOO_WSC_VERSION", "2.7.7" ); //Plugin version
+		$this->define( "XOO_WSC_VERSION", "2.8.0" ); //Plugin version
 		$this->define( "XOO_WSC_LITE", true );
 	}
 
@@ -280,6 +280,26 @@ class Xoo_Wsc_Loader{
 					
 					$syOptions['scm-btntheme-empty'] = 'theme_default2';
 					
+				}
+
+			}
+
+
+			if( version_compare( $db_version, '2.8.0', '<')  ){
+
+				$glOptions['scb-update-qty'] 	= 'no';
+				$glOptions['sch-show'] 			= array_diff( $glOptions['sch-show'], array( 'notifications' ) );
+
+				$syOptions['scbq-btnsize'] 		= 20;
+				$syOptions['scbq-input-border'] = $syOptions['scbq-box-border'] = array(
+					'size' 		=> 1,
+					'color' 	=> '#c9c9c9',
+					'style' 	=> 'solid',
+					'radius' 	=> 0,
+				);
+
+				if ( false === get_option( 'xoo_tracking_consent_side-cart-woocommerce', false ) ) {
+				    update_option( 'xoo_tracking_consent_side-cart-woocommerce', 'no' );
 				}
 
 			}

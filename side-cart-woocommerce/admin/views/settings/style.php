@@ -96,7 +96,7 @@ $settings = array(
 
 	array(
 		'callback' 		=> 'select',
-		'title' 		=> 'Slide Cart From',
+		'title' 		=> 'Open From',
 		'id' 			=> 'scm-open-from',
 		'section_id' 	=> 'sc_main',
 		'args' 			=> array(
@@ -105,7 +105,8 @@ $settings = array(
 				'right' 	=> 'Right',
 			),
 		),
-		'default' 	=> 'right'
+		'default' 	=> 'right',
+		'desc' 		=> 'Slide side cart from left or right side'
 	),
 
 
@@ -816,7 +817,7 @@ $settings = array(
 			),
 		),
 		'default' 	=> array(
-			'total_sales', 'name', 'link', 'meta', 'price', 'price_save'
+			'total_sales', 'name', 'link', 'meta', 'price', 'price_save', 'total_save'
 		),
 		'desc' 		=> 'This only controls back and front display. To enable/disable the detail go to tab general -> Side cart body -> Show and check/uncheck the detail from there.',
 	),
@@ -967,6 +968,7 @@ $settings = array(
 		'desc' 			=> xoo_wsc_helper()->box_shadow_desc('0px 10px 15px -12px #0000001a')
 	),
 
+	
 	/** SIDE CART BODY Quantity **/
 
 	array(
@@ -979,9 +981,11 @@ $settings = array(
 				'square' 	=> 'Square Corners',
 				'circle' 	=> 'Round Corners',
 			),
+			'toggleSettings' => array(
+				'xoo-wsc-sy-options[scbq-box-border]' => array( 'circle' ),
+			)
 		),
-		'default' 	=> 'square',
-		'pro' 		=> 'yes'
+		'default' 	=> 'square'
 	),
 
 	array(
@@ -990,10 +994,8 @@ $settings = array(
 		'id' 			=> 'scbq-width',
 		'section_id' 	=> 'scb_qty',
 		'default' 		=> 75,
-		'desc' 			=> 'Size in px',
-		'pro' 			=> 'yes'
+		'desc' 			=> 'Size in px'
 	),
-
 
 	array(
 		'callback' 		=> 'number',
@@ -1001,49 +1003,44 @@ $settings = array(
 		'id' 			=> 'scbq-height',
 		'section_id' 	=> 'scb_qty',
 		'default' 		=> 28,
-		'desc' 			=> 'Size in px',
-		'pro' 			=> 'yes'
+		'desc' 			=> 'Size in px'
 	),
+
 
 	array(
 		'callback' 		=> 'number',
-		'title' 		=> 'Border Size',
-		'id' 			=> 'scbq-bsize',
+		'title' 		=> '+/- Buttons Size',
+		'id' 			=> 'scbq-btnsize',
 		'section_id' 	=> 'scb_qty',
-		'default' 		=> 1,
-		'desc' 			=> 'Size in px',
-		'pro' 			=> 'yes'
+		'default' 		=> 20,
+		'desc' 			=> 'Size in px'
 	),
 
 
 	array(
 		'callback' 		=> 'color',
-		'title' 		=> 'Input Border Color',
-		'id' 			=> 'scbq-input-bcolor',
+		'title' 		=> '+/- Buttons BG Color',
+		'id' 			=> 'scbq-box-bgcolor',
 		'section_id' 	=> 'scb_qty',
-		'default' 		=> '#000000',
-		'desc' 			=> 'Leave empty to remove border',
-		'pro' 			=> 'yes'
+		'default' 		=> '#f8f9fa',
 	),
 
 
 	array(
 		'callback' 		=> 'color',
-		'title' 		=> 'Box Border Color',
-		'id' 			=> 'scbq-box-bcolor',
+		'title' 		=> '+/- Buttons Text Color',
+		'id' 			=> 'scbq-box-txtcolor',
 		'section_id' 	=> 'scb_qty',
-		'default' 		=> '#000000',
-		'desc' 			=> 'Leave empty to remove border',
-		'pro' 			=> 'yes'
+		'default' 		=> '#27374d',
 	),
+
 
 	array(
 		'callback' 		=> 'color',
 		'title' 		=> 'Input BG Color',
 		'id' 			=> 'scbq-input-bgcolor',
 		'section_id' 	=> 'scb_qty',
-		'default' 		=> '#ffffff',
-		'pro' 			=> 'yes'
+		'default' 		=> '#f8f9fa',
 	),
 
 
@@ -1052,29 +1049,44 @@ $settings = array(
 		'title' 		=> 'Input Text Color',
 		'id' 			=> 'scbq-input-txtcolor',
 		'section_id' 	=> 'scb_qty',
-		'default' 		=> '#000000',
-		'pro' 			=> 'yes'
+		'default' 		=> '#27374d',
+	),
+
+	
+
+	array(
+		'callback' 		=> 'border',
+		'title' 		=> 'Box Border',
+		'id' 			=> 'scbq-box-border',
+		'section_id' 	=> 'scb_qty',
+		'default' 		=> array(
+			'size' 		=> 1,
+			'color' 	=> '#c9c9c9',
+			'style' 	=> 'solid',
+			'radius' 	=> 0,
+		),
 	),
 
 
 	array(
-		'callback' 		=> 'color',
-		'title' 		=> 'Buttons BG Color',
-		'id' 			=> 'scbq-box-bgcolor',
+		'callback' 		=> 'border',
+		'title' 		=> 'Input Border',
+		'id' 			=> 'scbq-input-border',
 		'section_id' 	=> 'scb_qty',
-		'default' 		=> '#ffffff',
-		'pro' 			=> 'yes'
+		'default' 		=> array(
+			'size' 		=> 1,
+			'color' 	=> '#c9c9c9',
+			'style' 	=> 'solid',
+			'radius' 	=> 0,
+		),
 	),
 
 
-	array(
-		'callback' 		=> 'color',
-		'title' 		=> 'Buttons Text Color',
-		'id' 			=> 'scbq-box-txtcolor',
-		'section_id' 	=> 'scb_qty',
-		'default' 		=> '#000000',
-		'pro' 			=> 'yes'
-	),
+	
+
+
+
+
 
 
 	/** SIDE CART FOOTER **/

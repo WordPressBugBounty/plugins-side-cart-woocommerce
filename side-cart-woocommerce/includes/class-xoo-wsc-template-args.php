@@ -152,7 +152,7 @@ class Xoo_Wsc_Template_Args{
 		$showSalesCount 	= in_array( 'total_sales', $show );
 		$showPPriceSavings 	= in_array( 'product_price_save' , $show );
 		$showPTotalSavings 	= in_array( 'product_total_save' , $show );
-		$updateQty 			= false;
+		$updateQty 			= !$_product->is_sold_individually() && self::$gl['scb-update-qty'] === "yes";
 
 
 		if( !empty( $bundleData ) ){
@@ -185,7 +185,7 @@ class Xoo_Wsc_Template_Args{
 
 		$args = array(
 			'showPimage' 		=> $showPimage,
-			'updateQty' 		=> false,
+			'updateQty' 		=> $updateQty,
 			'showSalesCount' 	=> $showSalesCount,
 			'showPprice' 		=> $showPprice,
 			'showPdel' 			=> $showPdel,
@@ -200,7 +200,7 @@ class Xoo_Wsc_Template_Args{
 			'deletePosition' 	=> self::$sy['scbp-delpos'],
 			'deleteType' 		=> self::$sy['scbp-deltype'],
 			'deleteText' 		=> self::$gl['sct-delete'],
-			'oneLiner'  		=> self::$gl['scbp-qpdisplay'] === 'one_liner' && $showPprice && $showPtotal && $showPqty,
+			'oneLiner'  		=> self::$gl['scbp-qpdisplay'] === 'one_liner' && $showPprice && $showPtotal && $showPqty && !$updateQty,
 			'priceSavingsText' 	=> $priceSavingsText,
 			'totalSavingsText' 	=> $totalSavingsText,
 		);

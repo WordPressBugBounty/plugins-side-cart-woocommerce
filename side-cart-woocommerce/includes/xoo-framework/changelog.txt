@@ -1,3 +1,6 @@
+== 2.0.1 == 09-08-2026
+* Side bar fix
+
 == 2.0.0 == 20-06-2026
 * New Button Themes
 * Settings new UI
