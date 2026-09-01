@@ -522,7 +522,7 @@ class Xoo_Wsc_Admin_Settings{
 
 		?>
 		<div style="padding:5px 5px;">
-			<table style="margin:auto;border-collapse:collapse;border:none; width: 350px;  text-align: center; background-color: transparent;" border="0">
+			<table style="margin:auto;border-collapse:collapse;border:none; width: 380px;  text-align: center; background-color: transparent;" border="0">
 				<tr>
 					<td align="center" style="padding:5px 12px;font-size:13px;border:none;text-align: center;background-color: transparent;">
 						<div align="center" style="text-align:center;" a>

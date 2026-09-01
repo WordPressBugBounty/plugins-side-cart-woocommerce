@@ -258,11 +258,14 @@ jQuery(document).ready(function($){
 
 	class Cart extends Container{
 
+		static isWCAjaxAddToCart = false;
+
 		constructor( $modal ){
 
 			super( $modal, 'cart' );
 
-			this.cartLoaded = false;
+			this.cartLoaded 			= false;
+			this.blockAddedToCartCalled = false;
 			this.baseQty 				= 1;
 			this.qtyUpdateDelay 		= null;
 
@@ -295,6 +298,8 @@ jQuery(document).ready(function($){
 			$(document.body).on( 'added_to_cart', this.addedToCart.bind(this) );
 
 			$(document.body).on( 'wc-blocks_added_to_cart', this.blockAddedToCart.bind(this) );
+
+			$(document.body).on( 'adding_to_cart', this.checkIfWCAjaxAddToCart.bind(this) );
 
 			if( xoo_wsc_params.autoOpenCart === 'yes' && xoo_wsc_params.addedToCart === 'yes'){
 				this.openCart();
@@ -414,6 +419,15 @@ jQuery(document).ready(function($){
 				}
 
 			})
+		}
+
+		checkIfWCAjaxAddToCart(e, $button, data){
+
+			Cart.isWCAjaxAddToCart = true;
+
+			if( ( !(data instanceof FormData) || !data.has('action') || !data.get('action') === 'xoo_wsc_add_to_cart' ) && ( $button.length && $button.hasClass('ajax_add_to_cart') ) ){
+				this.isWCAjaxAddToCart = true;
+			}
 		}
 
 		toggleCart(e){
@@ -555,17 +569,30 @@ jQuery(document).ready(function($){
 
 		blockAddedToCart(){
 
-			$( document.body ).trigger( 'wc_fragment_refresh' );
+			if( !Cart.isWCAjaxAddToCart && !this.blockAddedToCartCalled ){
 
-			this.block();
-			
-			var _this = this;
+				this.refreshMyFragments();
+				
+				var _this = this;
 
-			if( xoo_wsc_params.autoOpenCart === "yes" ){
-				setTimeout(function(){
-					_this.openCart();	
-				},20 )
+				if( xoo_wsc_params.autoOpenCart === "yes" ){
+					setTimeout(function(){
+						_this.openCart();	
+					},20 )
+				}
+
+				this.blockAddedToCartCalled = true;
+
+				setTimeout( function(){
+					_this.blockAddedToCartCalled = false;
+				}, 200 );
+
+				Cart.isWCAjaxAddToCart = false;
+
 			}
+
+
+						
 		}
 
 		

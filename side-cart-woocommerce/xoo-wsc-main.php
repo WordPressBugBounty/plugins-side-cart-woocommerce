@@ -3,12 +3,13 @@
 * Plugin Name: Side Cart WooCommerce
 * Plugin URI: http://xootix.com/side-cart-woocommerce
 * Author: XootiX
-* Version: 2.8.0
+* Version: 2.8.1
 * Text Domain: side-cart-woocommerce
 * Domain Path: /languages
 * Author URI: http://xootix.com
 * Description: Manage your cart from just a click away
-* Tags: popup,floating cart,ajax,cart,slider
+* Tags: cart drawer,floating cart,cart slider,shopping cart
+* Requires Plugins: woocommerce
 */
 
 

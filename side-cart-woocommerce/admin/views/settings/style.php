@@ -10,7 +10,15 @@ $settings = array(
 		'default' 		=> array(
 			'theme_default1' => xoo_wsc_helper()->get_button_values( array(
 				'theme_id' => 'theme_default1',
-				'title' => 'Default Theme #1'
+				'title' => 'Default Theme #1',
+				'border' 	=> array(
+					'size' => 2,
+				),
+				'hover' => array(
+					'border' 	=> array(
+						'size' => 2,
+					),
+				)
 			) ),
 			'theme_default2' => xoo_wsc_helper()->get_button_values( array(
 				'theme_id' => 'theme_default2',

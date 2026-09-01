@@ -482,7 +482,7 @@ input[type="number"].xoo-wsc-qty{
 
 <?php
 
-if( WC()->cart->get_cart_contents_count() === 0 ){
+if( WC()->cart && WC()->cart->get_cart_contents_count() === 0 ){
 
 	$shortcodeEls = xoo_wsc_frontend()->shortcodeEls;
 
