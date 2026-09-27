@@ -179,11 +179,17 @@ $sections = array(
 
 	/* Rewards TAB Sections */
 	array(
-		'title' => 'Global Settings',
+		'title' => 'Bar Settings',
 		'id' 	=> 'general',
 		'tab' 	=> 'rewards',
+		'icon' 	=> 'xoo-icon-setting',
+	),
+
+	array(
+		'title' => 'Gift Settings',
+		'id' 	=> 'rewards_gift',
+		'tab' 	=> 'rewards',
 		'icon' 	=> 'xoo-icon-gift',
-		'pro' 	=> 'yes'
 	),
 
 	/* Custom CSS TAB Sections */

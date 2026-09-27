@@ -821,7 +821,7 @@ jQuery(document).ready(function($){
 		    var css = normalSelectors + '{' +
 
 		        'max-width:' + ( isAuto ? 'none' : ( values.width || '' ) + ( values.width_unit || '' ) ) + ';' +
-		        'width:' + ( isAuto ? 'auto' : '100%' ) + ';' +
+		        'width:' + ( isAuto ? 'max-content' : '100%' ) + ';' +
 		        'height:' + ( isAuto ? 'auto' : ( values.height || '' ) + ( values.height_unit || '' ) ) + ';' +
 		        'padding:' + ( isAuto
 		            ? ( values.padding_v || 0 ) + 'px ' + ( values.padding_h || 0 ) + 'px'
@@ -843,16 +843,17 @@ jQuery(document).ready(function($){
 				'justify-content:center;'+
 				'margin:' + ( values.margin_v || 0 ) + 'px ' + ( values.margin_h || 0 ) + 'px;';
 
-
-			    if ( values.position === 'center' ) {
-			        css += 'margin-left:auto;margin-right:auto;';
-			    }
-			    else if ( values.position === 'left' ) {
-			        css += 'margin-right:auto;';
-			    }
-			    else if ( values.position === 'right' ) {
-			        css += 'margin-left:auto;';
-			    }
+				if( values.position !== 'unset' ){
+				    if ( values.position === 'center' ) {
+				        css += 'margin-left:auto;margin-right:auto;';
+				    }
+				    else if ( values.position === 'left' ) {
+				        css += 'margin-right:auto;';
+				    }
+				    else if ( values.position === 'right' ) {
+				        css += 'margin-left:auto;';
+				    }
+				}
 
 		    css += '}';
 

@@ -1014,15 +1014,20 @@ jQuery(document).ready(function($){
 
 			Rewards.initColorPicker($bar);
 			
-			$bar.find('.xoo-wsc-bar-setting[data-barset="filter-byproduct"').trigger('change');
+			$bar.find('.xoo-wsc-bar-setting[data-barset="filter-byproduct"]').trigger('change');
 			$bar.find( '.xoo-wsc-bar-prodsearch' ).each(function( index, el ){
 				if( $(el).closest('.xoo-wsc-bar-checkpoints').length ) return; //will fetch values later on checkpoint toggle.
 				Rewards.productSearchFillDefaultValues($(el));
+				Rewards.categorySearchFillDefaultValues($(el));
 			})
 
 			if( callGlobal ){
 				Rewards.globalBarInit();
 			}
+
+			$bar.find('input.xoo-wscbarshow-bar').trigger('change');
+
+			Rewards.toggleBarSettings( $bar );
 			
 			
 		},
@@ -1031,6 +1036,23 @@ jQuery(document).ready(function($){
 			Rewards.initProductSearchBox();
 			Rewards.initSortable();
 			Rewards.barNumbering();
+		},
+
+
+		toggleBarSettings: function( $bar ){
+
+			var $showcaseSettings 	= $bar.find('[data-group="free_gift"]');
+
+			if( $bar.find('.xoo-wsc-bar-chkpoint[data-type="gift"]').length ){
+				$showcaseSettings.show();
+			}
+			else{
+				$showcaseSettings.hide();
+			}
+
+			$bar.find('[data-toggle="yes"]').trigger('change'); 
+
+			
 		},
 
 
@@ -1059,6 +1081,7 @@ jQuery(document).ready(function($){
 			$('body').on( 'input', '.xoo-wsc-bar-title-input', Rewards.onBarTitleChange );
 			$('body').on( 'change', 'select.xoo-wsc-bar-barValue', Rewards.onBarValueChange );
 			$('body').on( 'change', '.xoo-wsc-bar-setting[data-barset="filter-byproduct"]', Rewards.onProductFilterChange );
+			$('body').on( 'change', 'input.xoo-wscbarshow-bar', Rewards.settingShowBarElsToggle );
 
 			$('button.xoo-as-form-save').on( 'click', Rewards.beforeSettingsSave );
 			$(document).ajaxComplete(Rewards.onSettingsSave);
@@ -1118,11 +1141,19 @@ jQuery(document).ready(function($){
 		},
 
 		onCheckPointToggle: function(){
+
 			var $checkpoint = $(this).closest('.xoo-wsc-bar-chkpoint');
+
 			Rewards.initIconPicker( $checkpoint );
+
 			$.each( $checkpoint.find('.xoo-wsc-bar-prodsearch'), function( index, el ){
 				Rewards.productSearchFillDefaultValues($(el));
 			});
+
+			$.each( $checkpoint.find('.xoo-wsc-bar-catsearch'), function( index, el ){
+				Rewards.categorySearchFillDefaultValues($(el));
+			});
+			
 		},
 
 
@@ -1161,6 +1192,41 @@ jQuery(document).ready(function($){
 			})
 
 
+
+		},
+
+		categorySearchFillDefaultValues( $searchCont ){
+
+			var $defaultCont 	= $searchCont.find('.xoo-wsc-barpsearch-defaults');
+
+			if( !$defaultCont.length ) return true;
+
+			var $defaultInputs  = $defaultCont.find('input'),
+				$searchSelect 	= $searchCont.find('select.wc-category-search'),
+				defaultValues 	= [];
+
+			if( !$defaultInputs.length ) return true;
+
+			let categoryIDs = $defaultInputs.map(function(){
+			    return $(this).val();
+			}).get();
+
+			$searchCont.addClass('xoo-as-processing');
+
+			$.ajax({
+				url: xoo_wsc_admin_params.adminurl,
+				type: 'POST',
+				data: {
+					action: 'xoo_wsc_category_search_fill_defaults',
+					category_ids: categoryIDs,
+					xoo_wsc_nonce: xoo_wsc_admin_params.nonce
+				},
+				success: function( response ){
+					$searchSelect.html(response);
+					$defaultCont.remove();
+					$searchCont.removeClass('xoo-as-processing');
+				}
+			});
 
 		},
 
@@ -1244,7 +1310,9 @@ jQuery(document).ready(function($){
 		},
 
 		deleteCheckpoint: function(e){
+			var $bar = $(this).closest('.xoo-wsc-bar');
 			$(this).closest('.xoo-wsc-bar-chkpoint').remove();
+			Rewards.toggleBarSettings($bar);
 			e.stopImmediatePropagation();
 		},
 
@@ -1269,8 +1337,7 @@ jQuery(document).ready(function($){
 
 			Rewards.initIconPicker( $checkpoint );
 			Rewards.initProductSearchBox();
-
-
+			Rewards.toggleBarSettings( $bar );
 		},
 
 		initProductSearchBox(){
@@ -1285,9 +1352,32 @@ jQuery(document).ready(function($){
 			  $(e.target).next().attr('class',e.iconpickerValue || $(e.target).val() );
 			}).trigger('iconpickerSelected');
 			
+		},
+
+		settingShowBarElsToggle(){
+			var $thisCont = $(this).closest('label');
+
+			if ($(this).is(':checked')) {
+				$thisCont.siblings('label').show();
+			} else {
+				$thisCont.siblings('label').hide();
+			}
 		}
 
 	}
+
+	
+	// Show/hide max gifts field when "Allow users to select their gift" is toggled
+	$(document).on('change', '.xoo-wsc-chkpoint-setting input[name*="[choose]"]', function() {
+		var $container = $(this).closest('.xoo-wsc-bar-chkpoint');
+		var $maxGiftsField = $container.find('.xoo-wsc-max-gifts');
+		
+		if ($(this).is(':checked')) {
+			$maxGiftsField.show();
+		} else {
+			$maxGiftsField.hide();
+		}
+	});
 
 	Rewards.init();
 

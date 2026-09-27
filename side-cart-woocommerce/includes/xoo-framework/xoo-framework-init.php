@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 const XOO_FW_DIR = __DIR__;
-const XOO_FW_VERSION = '2.0.1';
+const XOO_FW_VERSION = '2.0.3';
 
 
 function xoo_framework_includes(){

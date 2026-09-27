@@ -304,7 +304,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 										<?php $adminObj->templatejs_select_options( 'position', array(
 											'left' 		=> 'Left',
 											'center' 	=> 'Center',
-											'right' 	=> 'Right'
+											'right' 	=> 'Right',
+											'unset' 	=> 'Unset'
 										) ) ?>
 									</select>
 

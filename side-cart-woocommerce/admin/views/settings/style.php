@@ -658,7 +658,7 @@ $settings = array(
 		'title' 		=> 'Image Width',
 		'id' 			=> 'scbp-imgw',
 		'section_id' 	=> 'scb_product',
-		'default' 		=> 28,
+		'default' 		=> 24,
 		'desc' 			=> 'Value in percentage'
 	),
 
@@ -732,7 +732,7 @@ $settings = array(
 				'one_line'	=> 'Show variations in single line',
 			),
 		),
-		'default' 	=> 'sep_line',
+		'default' 	=> 'one_line',
 		'desc' 		=> 'Format for displaying multiple variations.'
 	),
 
@@ -1512,6 +1512,40 @@ $settings = array(
 		'id' 			=> 'scsp-prd-bgcolor',
 		'section_id' 	=> 'sc_sug_products',
 		'default' 		=> '#fff',
+		'pro' 			=> 'yes'
+	),
+
+	array(
+		'callback' 		=> 'text',
+		'title' 		=> 'Product Padding',
+		'id' 			=> 'scsp-prd-padding',
+		'section_id' 	=> 'sc_sug_products',
+		'default' 		=> '10px 15px',
+		'desc' 			=> '↨ ⟷ ( Default: 10px 15px )',
+		'pro' 			=> 'yes'
+	),
+
+	array(
+		'callback' 		=> 'text',
+		'title' 		=> 'Products Spacing',
+		'id' 			=> 'scsp-prd-margin',
+		'section_id' 	=> 'sc_sug_products',
+		'default' 		=> '10px 15px',
+		'desc' 			=> 'Space between two products, ↨ ⟷ ( Default: 10px 15px )',
+		'pro' 			=> 'yes'
+	),
+
+	array(
+		'callback' 		=> 'border',
+		'title' 		=> 'Product Border',
+		'id' 			=> 'scsp-prd-border',
+		'section_id' 	=> 'sc_sug_products',
+		'default' 		=> array(
+			'size' 		=> 0,
+			'color' 	=> '#c9c9c9',
+			'style' 	=> 'solid',
+			'radius' 	=> 0,
+		),
 		'pro' 			=> 'yes'
 	),
 

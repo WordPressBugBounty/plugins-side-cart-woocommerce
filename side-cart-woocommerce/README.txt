@@ -4,13 +4,13 @@ Donate link: https://www.paypal.me/xootix
 Tags: cart drawer,floating cart,cart slider,rewards
 Requires at least: 3.0.1
 Tested up to: 7.1
-Stable tag: 2.8.1
+Stable tag: 2.8.2
 Requires Plugins: woocommerce
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 A powerful side cart designed to make shopping faster and easier.
-Give customers instant cart access and a seamless checkout experience.
+Give customers instant cart access and a seamless checkout experience
 
 == Description ==
 [Live Demo](http://demo.xootix.com/side-cart-for-woocommerce/)
@@ -135,6 +135,9 @@ You can use any third party plugin such as Loco Translate for hassle free transl
 8. Change Shipping Pro
 
 == Changelog ==
+
+= 2.8.2 =
+* Fix - PHP 8.4 compatibility
 
 = 2.8.1 =
 * Fix - Issue with 3rd party ajax add to cart plugins causing crash

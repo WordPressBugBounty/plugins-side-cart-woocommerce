@@ -520,7 +520,7 @@ class Xoo_Helper{
 
 				'margin_v' 		=> 0,
 				'margin_h' 		=> 0,
-				'position' 		=> 'center',
+				'position' 		=> 'unset',
 
 				'text' => array(
 					'fontWeight' 		=> 500,
@@ -601,14 +601,16 @@ class Xoo_Helper{
 			'justify-content' 	=> 'center'
 		);
 
-		if( $settings['position'] === 'center' ){
-			$normal_css['margin-left'] = $normal_css['margin-right'] = 'auto'; 
-		}
-		elseif ( $settings['position'] === 'left' ){
-			$normal_css['margin-right'] = 'auto';
-		}
-		elseif ( $settings['position'] === 'right' ){
-			$normal_css['margin-left'] = 'auto';
+		if( $settings['position'] !== 'unset' ){
+			if( $settings['position'] === 'center' ){
+				$normal_css['margin-left'] = $normal_css['margin-right'] = 'auto'; 
+			}
+			elseif ( $settings['position'] === 'left' ){
+				$normal_css['margin-right'] = 'auto';
+			}
+			elseif ( $settings['position'] === 'right' ){
+				$normal_css['margin-left'] = 'auto';
+			}
 		}
 
 		$hover_css = array(
