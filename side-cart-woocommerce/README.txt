@@ -1,7 +1,7 @@
 ===Side Cart Woocommerce | Woocommerce Cart===
 Contributors: XootiX
 Donate link: https://www.paypal.me/xootix
-Tags: cart drawer,floating cart,cart slider,rewards
+Tags: cart slider,cart drawer,cart popup,rewards
 Requires at least: 3.0.1
 Tested up to: 7.1
 Stable tag: 2.8.2
